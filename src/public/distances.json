@@ -1,0 +1,266 @@
+{
+  "c2": {
+    "c1": {
+      "distance": 9466,
+      "duration": 1001
+    },
+    "c3": {
+      "distance": 9472,
+      "duration": 995
+    },
+    "c4": {
+      "distance": 3108,
+      "duration": 594
+    },
+    "c5": {
+      "distance": 3185,
+      "duration": 683
+    },
+    "c2": {
+      "distance": 1930,
+      "duration": 372
+    }
+  },
+  "c3": {
+    "c3": {
+      "distance": 2516,
+      "duration": 499
+    },
+    "c1": {
+      "distance": 4284,
+      "duration": 458
+    },
+    "c2": {
+      "distance": 4029,
+      "duration": 525
+    },
+    "c4": {
+      "distance": 2950,
+      "duration": 577
+    },
+    "c5": {
+      "distance": 7349,
+      "duration": 793
+    }
+  },
+  "c4": {
+    "c4": {
+      "distance": 1852,
+      "duration": 413
+    },
+    "c1": {
+      "distance": 3147,
+      "duration": 722
+    },
+    "c2": {
+      "distance": 2193,
+      "duration": 475
+    },
+    "c3": {
+      "distance": 3153,
+      "duration": 716
+    },
+    "c5": {
+      "distance": 331,
+      "duration": 107
+    }
+  },
+  "c1": {
+    "c2": {
+      "distance": 4674,
+      "duration": 808
+    },
+    "c3": {
+      "distance": 1209,
+      "duration": 291
+    },
+    "c4": {
+      "distance": 2887,
+      "duration": 545
+    },
+    "c5": {
+      "distance": 2856,
+      "duration": 632
+    },
+    "c1": {
+      "distance": 815,
+      "duration": 218
+    }
+  },
+  "c5": {
+    "c5": {
+      "distance": 1843,
+      "duration": 493
+    },
+    "c1": {
+      "distance": 3278,
+      "duration": 655
+    },
+    "c2": {
+      "distance": 1163,
+      "duration": 263
+    },
+    "c3": {
+      "distance": 3284,
+      "duration": 649
+    },
+    "c4": {
+      "distance": 643,
+      "duration": 135
+    }
+  },
+  "d1": {
+    "c1": {
+      "distance": 1554,
+      "duration": 378
+    },
+    "c2": {
+      "distance": 3109,
+      "duration": 586
+    },
+    "c3": {
+      "distance": 1560,
+      "duration": 372
+    },
+    "c4": {
+      "distance": 1486,
+      "duration": 252
+    },
+    "c5": {
+      "distance": 1049,
+      "duration": 307
+    }
+  },
+  "d2": {
+    "c1": {
+      "distance": 3539,
+      "duration": 836
+    },
+    "c2": {
+      "distance": 2792,
+      "duration": 632
+    },
+    "c3": {
+      "distance": 3545,
+      "duration": 830
+    },
+    "c4": {
+      "distance": 2944,
+      "duration": 704
+    },
+    "c5": {
+      "distance": 723,
+      "duration": 221
+    }
+  },
+  "d3": {
+    "c1": {
+      "distance": 2584,
+      "duration": 636
+    },
+    "c2": {
+      "distance": 2809,
+      "duration": 634
+    },
+    "c3": {
+      "distance": 2590,
+      "duration": 630
+    },
+    "c4": {
+      "distance": 2495,
+      "duration": 497
+    },
+    "c5": {
+      "distance": 500,
+      "duration": 162
+    }
+  },
+  "d4": {
+    "c1": {
+      "distance": 1681,
+      "duration": 376
+    },
+    "c2": {
+      "distance": 3697,
+      "duration": 639
+    },
+    "c3": {
+      "distance": 1688,
+      "duration": 370
+    },
+    "c4": {
+      "distance": 1910,
+      "duration": 376
+    },
+    "c5": {
+      "distance": 2664,
+      "duration": 630
+    }
+  },
+  "d5": {
+    "c1": {
+      "distance": 9119,
+      "duration": 994
+    },
+    "c2": {
+      "distance": 2460,
+      "duration": 462
+    },
+    "c3": {
+      "distance": 9125,
+      "duration": 988
+    },
+    "c4": {
+      "distance": 3257,
+      "duration": 595
+    },
+    "c5": {
+      "distance": 2298,
+      "duration": 482
+    }
+  },
+  "d6": {
+    "c1": {
+      "distance": 10139,
+      "duration": 805
+    },
+    "c2": {
+      "distance": 3838,
+      "duration": 665
+    },
+    "c3": {
+      "distance": 10145,
+      "duration": 799
+    },
+    "c4": {
+      "distance": 7939,
+      "duration": 719
+    },
+    "c5": {
+      "distance": 4750,
+      "duration": 977
+    }
+  },
+  "d7": {
+    "c1": {
+      "distance": 8748,
+      "duration": 666
+    },
+    "c2": {
+      "distance": 3470,
+      "duration": 437
+    },
+    "c3": {
+      "distance": 8754,
+      "duration": 660
+    },
+    "c4": {
+      "distance": 4106,
+      "duration": 551
+    },
+    "c5": {
+      "distance": 4879,
+      "duration": 738
+    }
+  }
+}

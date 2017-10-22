@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c1",
+    "params": [],
+    "startLocation": {
+      "lat": 41.148531,
+      "lng": -8.585595
+    },
+    "endLocation": {
+      "lat": 41.150772,
+      "lng": -8.593407
+    }
+  },
+  {
+    "id": "c2",
+    "params": [],
+    "startLocation": {
+      "lat": 41.157558,
+      "lng": -8.609949
+    },
+    "endLocation": {
+      "lat": 41.157405,
+      "lng": -8.625519
+    }
+  },
+  {
+    "id": "c3",
+    "params": [],
+    "startLocation": {
+      "lat": 41.148648,
+      "lng": -8.585685
+    },
+    "endLocation": {
+      "lat": 41.165118,
+      "lng": -8.588853
+    }
+  },
+  {
+    "id": "c4",
+    "params": [],
+    "startLocation": {
+      "lat": 41.157081,
+      "lng": -8.600517
+    },
+    "endLocation": {
+      "lat": 41.14809,
+      "lng": -8.611146
+    }
+  },
+  {
+    "id": "c5",
+    "params": [],
+    "startLocation": {
+      "lat": 41.145867,
+      "lng": -8.61066
+    },
+    "endLocation": {
+      "lat": 41.160492,
+      "lng": -8.604504
+    }
+  }
+]

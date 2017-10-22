@@ -1,0 +1,830 @@
+{
+  "T96": {
+    "T96": {
+      "distance": 11761,
+      "duration": 877
+    },
+    "T131": {
+      "distance": 17307,
+      "duration": 1244
+    },
+    "T138": {
+      "distance": 17353,
+      "duration": 1080
+    },
+    "T123": {
+      "distance": 13373,
+      "duration": 879
+    },
+    "T149": {
+      "distance": 15429,
+      "duration": 1176
+    },
+    "T98": {
+      "distance": 9934,
+      "duration": 1240
+    },
+    "T113": {
+      "distance": 9973,
+      "duration": 874
+    },
+    "T99": {
+      "distance": 8592,
+      "duration": 757
+    },
+    "T84": {
+      "distance": 15900,
+      "duration": 963
+    },
+    "T80": {
+      "distance": 4751,
+      "duration": 509
+    },
+    "T148": {
+      "distance": 15004,
+      "duration": 1130
+    }
+  },
+  "T138": {
+    "T138": {
+      "distance": 11640,
+      "duration": 610
+    },
+    "T131": {
+      "distance": 15251,
+      "duration": 889
+    },
+    "T96": {
+      "distance": 11638,
+      "duration": 1045
+    },
+    "T123": {
+      "distance": 13845,
+      "duration": 823
+    },
+    "T149": {
+      "distance": 11888,
+      "duration": 753
+    },
+    "T98": {
+      "distance": 14471,
+      "duration": 1063
+    },
+    "T113": {
+      "distance": 15668,
+      "duration": 880
+    },
+    "T99": {
+      "distance": 13951,
+      "duration": 801
+    },
+    "T84": {
+      "distance": 11506,
+      "duration": 500
+    },
+    "T80": {
+      "distance": 16337,
+      "duration": 860
+    },
+    "T148": {
+      "distance": 15444,
+      "duration": 1038
+    }
+  },
+  "T131": {
+    "T131": {
+      "distance": 117491,
+      "duration": 5669
+    },
+    "T138": {
+      "distance": 134911,
+      "duration": 6067
+    },
+    "T96": {
+      "distance": 124766,
+      "duration": 6001
+    },
+    "T123": {
+      "distance": 120668,
+      "duration": 5417
+    },
+    "T149": {
+      "distance": 125581,
+      "duration": 5797
+    },
+    "T98": {
+      "distance": 130070,
+      "duration": 6183
+    },
+    "T113": {
+      "distance": 123077,
+      "duration": 5623
+    },
+    "T99": {
+      "distance": 127175,
+      "duration": 5765
+    },
+    "T84": {
+      "distance": 126052,
+      "duration": 5585
+    },
+    "T80": {
+      "distance": 127267,
+      "duration": 5668
+    },
+    "T148": {
+      "distance": 118115,
+      "duration": 5574
+    }
+  },
+  "T123": {
+    "T131": {
+      "distance": 13897,
+      "duration": 1184
+    },
+    "T138": {
+      "distance": 12719,
+      "duration": 857
+    },
+    "T96": {
+      "distance": 6956,
+      "duration": 1246
+    },
+    "T149": {
+      "distance": 12882,
+      "duration": 1079
+    },
+    "T98": {
+      "distance": 6840,
+      "duration": 1056
+    },
+    "T113": {
+      "distance": 7426,
+      "duration": 777
+    },
+    "T99": {
+      "distance": 2996,
+      "duration": 415
+    },
+    "T84": {
+      "distance": 13354,
+      "duration": 867
+    },
+    "T80": {
+      "distance": 2947,
+      "duration": 456
+    },
+    "T148": {
+      "distance": 12412,
+      "duration": 1199
+    },
+    "T123": {
+      "distance": 9483,
+      "duration": 873
+    }
+  },
+  "T149": {
+    "T149": {
+      "distance": 14116,
+      "duration": 823
+    },
+    "T131": {
+      "distance": 14200,
+      "duration": 943
+    },
+    "T138": {
+      "distance": 17408,
+      "duration": 879
+    },
+    "T96": {
+      "distance": 10829,
+      "duration": 1111
+    },
+    "T123": {
+      "distance": 10266,
+      "duration": 578
+    },
+    "T98": {
+      "distance": 9990,
+      "duration": 1040
+    },
+    "T113": {
+      "distance": 10029,
+      "duration": 673
+    },
+    "T99": {
+      "distance": 8647,
+      "duration": 556
+    },
+    "T84": {
+      "distance": 15956,
+      "duration": 763
+    },
+    "T80": {
+      "distance": 4807,
+      "duration": 309
+    },
+    "T148": {
+      "distance": 11897,
+      "duration": 829
+    }
+  },
+  "T98": {
+    "T98": {
+      "distance": 2971,
+      "duration": 652
+    },
+    "T131": {
+      "distance": 14141,
+      "duration": 1109
+    },
+    "T138": {
+      "distance": 11623,
+      "duration": 754
+    },
+    "T96": {
+      "distance": 3262,
+      "duration": 656
+    },
+    "T123": {
+      "distance": 10385,
+      "duration": 917
+    },
+    "T149": {
+      "distance": 13126,
+      "duration": 1004
+    },
+    "T113": {
+      "distance": 2688,
+      "duration": 572
+    },
+    "T99": {
+      "distance": 3152,
+      "duration": 541
+    },
+    "T84": {
+      "distance": 13598,
+      "duration": 791
+    },
+    "T80": {
+      "distance": 4103,
+      "duration": 611
+    },
+    "T148": {
+      "distance": 12656,
+      "duration": 1123
+    }
+  },
+  "T113": {
+    "T113": {
+      "distance": 1777,
+      "duration": 446
+    },
+    "T131": {
+      "distance": 6243,
+      "duration": 813
+    },
+    "T138": {
+      "distance": 14629,
+      "duration": 951
+    },
+    "T96": {
+      "distance": 2376,
+      "duration": 517
+    },
+    "T123": {
+      "distance": 2564,
+      "duration": 456
+    },
+    "T149": {
+      "distance": 5298,
+      "duration": 682
+    },
+    "T98": {
+      "distance": 4092,
+      "duration": 886
+    },
+    "T99": {
+      "distance": 8785,
+      "duration": 751
+    },
+    "T84": {
+      "distance": 5769,
+      "duration": 469
+    },
+    "T80": {
+      "distance": 8149,
+      "duration": 688
+    },
+    "T148": {
+      "distance": 4249,
+      "duration": 724
+    }
+  },
+  "T84": {
+    "T84": {
+      "distance": 4195,
+      "duration": 347
+    },
+    "T131": {
+      "distance": 4307,
+      "duration": 467
+    },
+    "T138": {
+      "distance": 15695,
+      "duration": 1039
+    },
+    "T96": {
+      "distance": 5257,
+      "duration": 889
+    },
+    "T123": {
+      "distance": 596,
+      "duration": 142
+    },
+    "T149": {
+      "distance": 6364,
+      "duration": 769
+    },
+    "T98": {
+      "distance": 12345,
+      "duration": 1186
+    },
+    "T113": {
+      "distance": 5352,
+      "duration": 626
+    },
+    "T99": {
+      "distance": 9451,
+      "duration": 769
+    },
+    "T80": {
+      "distance": 8815,
+      "duration": 705
+    },
+    "T148": {
+      "distance": 2195,
+      "duration": 358
+    }
+  },
+  "T99": {
+    "T99": {
+      "distance": 4574,
+      "duration": 827
+    },
+    "T131": {
+      "distance": 8827,
+      "duration": 878
+    },
+    "T138": {
+      "distance": 17142,
+      "duration": 1042
+    },
+    "T96": {
+      "distance": 898,
+      "duration": 222
+    },
+    "T123": {
+      "distance": 5743,
+      "duration": 677
+    },
+    "T149": {
+      "distance": 7812,
+      "duration": 773
+    },
+    "T98": {
+      "distance": 1496,
+      "duration": 469
+    },
+    "T113": {
+      "distance": 1942,
+      "duration": 400
+    },
+    "T84": {
+      "distance": 8283,
+      "duration": 560
+    },
+    "T80": {
+      "distance": 7723,
+      "duration": 666
+    },
+    "T148": {
+      "distance": 7342,
+      "duration": 893
+    }
+  },
+  "T80": {
+    "T80": {
+      "distance": 503,
+      "duration": 90
+    },
+    "T131": {
+      "distance": 12202,
+      "duration": 982
+    },
+    "T138": {
+      "distance": 13110,
+      "duration": 781
+    },
+    "T96": {
+      "distance": 6531,
+      "duration": 1012
+    },
+    "T123": {
+      "distance": 8446,
+      "duration": 790
+    },
+    "T149": {
+      "distance": 11186,
+      "duration": 877
+    },
+    "T98": {
+      "distance": 5692,
+      "duration": 941
+    },
+    "T113": {
+      "distance": 5731,
+      "duration": 575
+    },
+    "T99": {
+      "distance": 3145,
+      "duration": 510
+    },
+    "T84": {
+      "distance": 11658,
+      "duration": 664
+    },
+    "T148": {
+      "distance": 10717,
+      "duration": 997
+    }
+  },
+  "T148": {
+    "T148": {
+      "distance": 3829,
+      "duration": 636
+    },
+    "T131": {
+      "distance": 5854,
+      "duration": 733
+    },
+    "T138": {
+      "distance": 14422,
+      "duration": 910
+    },
+    "T96": {
+      "distance": 2762,
+      "duration": 586
+    },
+    "T123": {
+      "distance": 2175,
+      "duration": 376
+    },
+    "T149": {
+      "distance": 5091,
+      "duration": 640
+    },
+    "T98": {
+      "distance": 4478,
+      "duration": 954
+    },
+    "T113": {
+      "distance": 2263,
+      "duration": 424
+    },
+    "T99": {
+      "distance": 8396,
+      "duration": 671
+    },
+    "T84": {
+      "distance": 5563,
+      "duration": 428
+    },
+    "T80": {
+      "distance": 7760,
+      "duration": 608
+    }
+  },
+  "d1": {
+    "T131": {
+      "distance": 8197,
+      "duration": 833
+    },
+    "T138": {
+      "distance": 12330,
+      "duration": 913
+    },
+    "T96": {
+      "distance": 1404,
+      "duration": 345
+    },
+    "T123": {
+      "distance": 6782,
+      "duration": 776
+    },
+    "T149": {
+      "distance": 1579,
+      "duration": 390
+    },
+    "T98": {
+      "distance": 2451,
+      "duration": 569
+    },
+    "T113": {
+      "distance": 3338,
+      "duration": 651
+    },
+    "T99": {
+      "distance": 5475,
+      "duration": 966
+    },
+    "T84": {
+      "distance": 4452,
+      "duration": 445
+    },
+    "T80": {
+      "distance": 12068,
+      "duration": 913
+    },
+    "T148": {
+      "distance": 8381,
+      "duration": 992
+    }
+  },
+  "d2": {
+    "T131": {
+      "distance": 10899,
+      "duration": 1325
+    },
+    "T138": {
+      "distance": 13567,
+      "duration": 1169
+    },
+    "T96": {
+      "distance": 1259,
+      "duration": 345
+    },
+    "T123": {
+      "distance": 7223,
+      "duration": 1046
+    },
+    "T149": {
+      "distance": 3564,
+      "duration": 850
+    },
+    "T98": {
+      "distance": 916,
+      "duration": 274
+    },
+    "T113": {
+      "distance": 3154,
+      "duration": 758
+    },
+    "T99": {
+      "distance": 4822,
+      "duration": 916
+    },
+    "T84": {
+      "distance": 7154,
+      "duration": 936
+    },
+    "T80": {
+      "distance": 8092,
+      "duration": 984
+    },
+    "T148": {
+      "distance": 8822,
+      "duration": 1262
+    }
+  },
+  "d3": {
+    "T131": {
+      "distance": 9227,
+      "duration": 1091
+    },
+    "T138": {
+      "distance": 12611,
+      "duration": 967
+    },
+    "T96": {
+      "distance": 1276,
+      "duration": 343
+    },
+    "T123": {
+      "distance": 7812,
+      "duration": 1034
+    },
+    "T149": {
+      "distance": 2608,
+      "duration": 647
+    },
+    "T98": {
+      "distance": 2383,
+      "duration": 546
+    },
+    "T113": {
+      "distance": 3550,
+      "duration": 787
+    },
+    "T99": {
+      "distance": 5407,
+      "duration": 943
+    },
+    "T84": {
+      "distance": 5482,
+      "duration": 702
+    },
+    "T80": {
+      "distance": 8677,
+      "duration": 1012
+    },
+    "T148": {
+      "distance": 9411,
+      "duration": 1249
+    }
+  },
+  "d4": {
+    "T131": {
+      "distance": 6315,
+      "duration": 805
+    },
+    "T138": {
+      "distance": 13497,
+      "duration": 939
+    },
+    "T96": {
+      "distance": 2504,
+      "duration": 559
+    },
+    "T123": {
+      "distance": 4230,
+      "duration": 716
+    },
+    "T149": {
+      "distance": 1706,
+      "duration": 387
+    },
+    "T98": {
+      "distance": 4067,
+      "duration": 891
+    },
+    "T113": {
+      "distance": 3926,
+      "duration": 704
+    },
+    "T99": {
+      "distance": 10252,
+      "duration": 953
+    },
+    "T84": {
+      "distance": 4580,
+      "duration": 442
+    },
+    "T80": {
+      "distance": 9616,
+      "duration": 890
+    },
+    "T148": {
+      "distance": 5830,
+      "duration": 931
+    }
+  },
+  "d5": {
+    "T131": {
+      "distance": 10160,
+      "duration": 1111
+    },
+    "T138": {
+      "distance": 12440,
+      "duration": 927
+    },
+    "T96": {
+      "distance": 2378,
+      "duration": 467
+    },
+    "T123": {
+      "distance": 6746,
+      "duration": 912
+    },
+    "T149": {
+      "distance": 9144,
+      "duration": 1005
+    },
+    "T98": {
+      "distance": 2275,
+      "duration": 470
+    },
+    "T113": {
+      "distance": 2381,
+      "duration": 480
+    },
+    "T99": {
+      "distance": 3968,
+      "duration": 713
+    },
+    "T84": {
+      "distance": 9616,
+      "duration": 793
+    },
+    "T80": {
+      "distance": 4987,
+      "duration": 640
+    },
+    "T148": {
+      "distance": 8376,
+      "duration": 1163
+    }
+  },
+  "d6": {
+    "T131": {
+      "distance": 11179,
+      "duration": 922
+    },
+    "T138": {
+      "distance": 11376,
+      "duration": 744
+    },
+    "T96": {
+      "distance": 5105,
+      "duration": 925
+    },
+    "T123": {
+      "distance": 7423,
+      "duration": 730
+    },
+    "T149": {
+      "distance": 10164,
+      "duration": 817
+    },
+    "T98": {
+      "distance": 4265,
+      "duration": 854
+    },
+    "T113": {
+      "distance": 4708,
+      "duration": 515
+    },
+    "T99": {
+      "distance": 2529,
+      "duration": 411
+    },
+    "T84": {
+      "distance": 10635,
+      "duration": 604
+    },
+    "T80": {
+      "distance": 3276,
+      "duration": 356
+    },
+    "T148": {
+      "distance": 9694,
+      "duration": 937
+    }
+  },
+  "d7": {
+    "T131": {
+      "distance": 9789,
+      "duration": 783
+    },
+    "T138": {
+      "distance": 16309,
+      "duration": 830
+    },
+    "T96": {
+      "distance": 4737,
+      "duration": 696
+    },
+    "T123": {
+      "distance": 4468,
+      "duration": 563
+    },
+    "T149": {
+      "distance": 8773,
+      "duration": 677
+    },
+    "T98": {
+      "distance": 10442,
+      "duration": 924
+    },
+    "T113": {
+      "distance": 3449,
+      "duration": 364
+    },
+    "T99": {
+      "distance": 7548,
+      "duration": 507
+    },
+    "T84": {
+      "distance": 9245,
+      "duration": 465
+    },
+    "T80": {
+      "distance": 6912,
+      "duration": 444
+    },
+    "T148": {
+      "distance": 6098,
+      "duration": 814
+    }
+  }
+}
