@@ -6,6 +6,7 @@ export default class Client {
   startLocation: LatLng;
   endLocation: LatLng;
   distance: number;
+  time: number;
 
   constructor(client: any) {
     this.id = client.id;
@@ -13,5 +14,6 @@ export default class Client {
     this.startLocation = new LatLng(client.startLocation);
     this.endLocation = new LatLng(client.endLocation);
     this.distance = client.distance;
+    this.time = client.time;
   }
 }

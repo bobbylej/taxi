@@ -23,4 +23,12 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
       handler: algorithmController.distances
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/simulation',
+    config: {
+      handler: algorithmController.simulation
+    }
+  });
 }

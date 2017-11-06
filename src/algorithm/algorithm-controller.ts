@@ -19,6 +19,8 @@ import { AlgorithmAntsMy } from './../services/algorithm.ants.my';
 import { AlgorithmBees } from './../services/algorithm.bees';
 import { AlgorithmGenetic } from './../services/algorithm.genetic';
 import { AlgorithmNaive } from './../services/algorithm.naive';
+import { Simulation } from './../services/simulation';
+import { googleService } from './../services/google.service';
 
 export default class AlgorithmController {
 
@@ -80,18 +82,34 @@ export default class AlgorithmController {
   }
 
   public async distances(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    const clients: Array<Client> = this.fileService.readInput('clients1.json');
-    const drivers = this.fileService.readInput('drivers.json');
+    const clients: Array<Client> = this.fileService.readInput('clients2.json');
+    let drivers = this.fileService.readInput('drivers.json');
+    drivers = drivers.slice(5,7);
 
     this.algorithm = new Algorithm(clients, drivers);
 
-    // this.algorithm.distances = await this.algorithm.getDistances();
+    this.algorithm.distances = await this.algorithm.getDistances();
 
-    const direction = await this.algorithm.getGoogleDirection(clients[0].startLocation, clients[0].endLocation);
+    // const direction = await googleService.getGoogleDirection(clients[0].startLocation, clients[0].endLocation, clients[0].time);
 
     reply({
-      // distances: this.algorithm.distances,
-      direction: direction
+      distances: this.algorithm.distances,
+      // direction: direction
+    });
+  }
+
+  public async simulation(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    const clients: Array<Client> = this.fileService.readInput('clients2.json');
+    let drivers = this.fileService.readInput('drivers.json');
+    drivers = drivers.slice(0,5);
+    const distances: Array<Distance> = this.fileService.readInput('distances3.json');
+
+    const simulation = new Simulation(clients, drivers, distances);
+    const duration = simulation.start();
+    //test
+
+    reply({
+      duration: duration
     });
   }
 }

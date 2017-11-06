@@ -17,7 +17,7 @@ export default class Path {
     let pathWeight = 0;
     this.edges.forEach(edge => {
       if (edge.weight === undefined) {
-        console.error('(algorithm.js) countPath: edge.weight is undefined');
+        console.error('(Path.ts) countPath: edge.weight is undefined');
         return;
       }
       pathWeight += edge.weight;
@@ -25,7 +25,7 @@ export default class Path {
     return pathWeight;
   }
 
-  addEdgeToPath(edge): void {
+  addEdgeToPath(edge: Edge): void {
     const endDriver = edge.endNode.driver;
     let endDriverPath = this.driversPaths[endDriver.id];
     const endClient = edge.endNode.client;

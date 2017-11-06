@@ -62,7 +62,7 @@ export class AlgorithmAntsR extends Algorithm {
     }
     this.algorithmTime = new Date().getTime() - this.startTime;
     console.log('Ants');
-    this.logPath(this.bestPath);
+    console.log(this.bestPath.toString());
     return this.bestPath;
   }
 

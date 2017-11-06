@@ -29,7 +29,7 @@ class AlgorithmNaive extends algorithm_1.Algorithm {
             this.findPaths(this.nodes);
             this.algorithmTime = new Date().getTime() - this.startTime;
             console.log('Naive - iterations', this.iterations, Object.keys(this.nodes).length);
-            this.logPath(this.bestPath);
+            console.log(this.bestPath.toString());
             return this.bestPath;
         });
     }

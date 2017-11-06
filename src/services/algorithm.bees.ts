@@ -30,14 +30,20 @@ export class AlgorithmBees extends Algorithm {
     this.generateInitialPaths();
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
     for (let i = 0; this.isTimeUp(); i++) {
+      console.log('check0');
       this.explorePaths();
+      console.log('check1');
       this.explorePathsWithProbability();
+      console.log('check2');
       this.findNewPath();
+      console.log('check3');
       this.getBestPath();
+      console.log('check4');
+
     }
     this.algorithmTime = new Date().getTime() - this.startTime;
     console.log('Bees');
-    this.logPath(this.bestPath);
+    console.log(this.bestPath.toString());
     return this.bestPath;
   }
 
@@ -58,8 +64,12 @@ export class AlgorithmBees extends Algorithm {
 
   explorePaths(): void {
     for (let i = 0; i < this.beesAmount; i++) {
+      console.log('explorePaths', this.paths[i]);
       let path = this.modifyPath(this.paths[i]);
+      console.log('explorePaths', path);
+
       path.weight = path.countPath();
+      console.log('explorePaths', path.weight);
       if (this.paths[i].weight > path.weight) {
         this.paths[i] = path;
         this.exhaustedValues[i] = this.initialExhaustedValue;
@@ -160,25 +170,28 @@ export class AlgorithmBees extends Algorithm {
   }
 
   modifyPath(path: Path): Path {
-    const edges = path.edges.map(edge => new Edge(edge));
-    const edgesAmount = edges.length;
-    for (let i = 0; i < this.modifiesPathAmount; i++) {
-      const nodeIndex1 = this.getRandomIndexNodeFromPath(edges);
-      let nodeIndex2 = this.getRandomIndexNodeFromPath(edges);
-      while (nodeIndex1.node.isEqual(nodeIndex2.node)) {
-        nodeIndex2 = this.getRandomIndexNodeFromPath(edges);
+    if (path.edges.length > 1) {
+      const edges = path.edges.map(edge => new Edge(edge));
+      const edgesAmount = edges.length;
+      for (let i = 0; i < this.modifiesPathAmount; i++) {
+        const nodeIndex1 = this.getRandomIndexNodeFromPath(edges);
+        let nodeIndex2 = this.getRandomIndexNodeFromPath(edges);
+        while (nodeIndex1.node.isEqual(nodeIndex2.node)) {
+          nodeIndex2 = this.getRandomIndexNodeFromPath(edges);
+        }
+        this.modifyNode(edges, nodeIndex1.index.edge, nodeIndex2.node);
+        this.modifyNode(edges, nodeIndex2.index.edge, nodeIndex1.node);
+        // this.replaceNode(edges, nodeIndex1.index.edge, nodeIndex2.node);
+        // this.replaceNode(edges, nodeIndex2.index.edge, nodeIndex1.node);
       }
-      this.modifyNode(edges, nodeIndex1.index.edge, nodeIndex2.node);
-      this.modifyNode(edges, nodeIndex2.index.edge, nodeIndex1.node);
-      // this.replaceNode(edges, nodeIndex1.index.edge, nodeIndex2.node);
-      // this.replaceNode(edges, nodeIndex2.index.edge, nodeIndex1.node);
+      const newPath = new Path({});
+      edges.forEach(edge => {
+        edge.weight = edge.countEdge(newPath, this.distances);
+        newPath.addEdgeToPath(edge);
+      });
+      return newPath;
     }
-    const newPath = new Path({});
-    edges.forEach(edge => {
-      edge.weight = edge.countEdge(newPath, this.distances);
-      newPath.addEdgeToPath(edge);
-    });
-    return newPath;
+    return path;
   }
 
   getRandomIndexNodeFromPath(edges: Array<Edge>): any {

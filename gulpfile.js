@@ -7,6 +7,7 @@ const mocha = require('gulp-mocha');
 const shell = require('gulp-shell');
 const env = require('gulp-env');
 const bundle = require('gulp-bundle-assets');
+const watch = require('gulp-watch');
 
 /**
  * Remove build directory.
@@ -49,7 +50,7 @@ gulp.task('compile', shell.task([
 /**
  * Watch for changes in TypeScript
  */
-gulp.task('watch', shell.task([
+gulp.task('ts-watch', shell.task([
   'npm run tsc-watch',
 ]))
 /**
@@ -73,6 +74,18 @@ gulp.task('build', ['tslint', 'compile', 'configs'], () => {
 gulp.task('public', (cb) => {
   return gulp.src("src/public/*.json")
     .pipe(gulp.dest('./build/src/public'));
+});
+
+gulp.task('public-watch', (cb) => {
+  return watch("src/public/*.json")
+    .pipe(gulp.dest('./build/src/public'));
+});
+
+/**
+ * Watch the project.
+ */
+gulp.task('watch', ['ts-watch', 'public-watch'], () => {
+  console.log('Watching the project ...');
 });
 
 /**

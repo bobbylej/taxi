@@ -9,60 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const gapi = require("@google/maps");
+// Models
 const distance_1 = require("./../models/distance");
-class Google {
-    constructor(clients, drivers, nodes) {
-        this.clients = clients;
-        this.drivers = drivers;
-        this.nodes = nodes;
+const latlng_1 = require("./../models/latlng");
+class GoogleService {
+    constructor() {
         this.initGoogleApi();
     }
     initGoogleApi() {
         this.googleMapsClient = gapi.createClient({
+            // key: 'AIzaSyAPWbCNIq7JkMMH15K2H8EDzSCZwUD2JNI'
             key: 'AIzaSyB0hSN1QhrjZ4Qzdu1YH3E_RvBINVCrt_A'
-        });
-    }
-    getDistances() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.distances = {};
-            const promises = new Array();
-            if (this.clients) {
-                this.clients.forEach((client1) => {
-                    promises.push(this.getGoogleDistance(client1.startLocation, client1.endLocation).then(distance => {
-                        this.distances[client1.id][client1.id] = distance;
-                    }));
-                    this.clients.forEach((client2) => {
-                        if (client1.id !== client2.id) {
-                            if (!this.distances[client1.id]) {
-                                this.distances[client1.id] = {};
-                            }
-                            promises.push(this.getGoogleDistance(client1.endLocation, client2.startLocation).then(distance => {
-                                this.distances[client1.id][client2.id] = distance;
-                            }));
-                        }
-                    });
-                });
-            }
-            if (this.nodes) {
-                for (var key in this.nodes) {
-                    if (this.nodes.hasOwnProperty(key)) {
-                        const driverNodes = this.nodes[key];
-                        driverNodes.forEach(node => {
-                            if (!this.distances[node.driver.id]) {
-                                this.distances[node.driver.id] = {};
-                            }
-                            promises.push(this.getGoogleDistance(node.driver.location, node.client.startLocation).then(distance => {
-                                this.distances[node.driver.id][node.client.id] = distance;
-                            }));
-                        });
-                    }
-                }
-            }
-            return new Promise((resolve, reject) => {
-                Promise.all(promises).then(() => {
-                    return resolve(this.distances);
-                });
-            });
+            // key: 'AIzaSyBXTZogSxhfwrK_smDpOTFUBsWyoKW9ejU'
         });
     }
     getGoogleDistance(location1, location2) {
@@ -84,6 +42,86 @@ class Google {
             });
         });
     }
+    getGoogleDistances(origins, destinations) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const distances = {};
+            const locationsOrigins = [];
+            origins.forEach(origin => {
+                locationsOrigins.push(origin.location);
+            });
+            const locationsDestinations = [];
+            destinations.forEach(destination => {
+                locationsDestinations.push(destination.location);
+            });
+            return yield new Promise((resolve, reject) => {
+                this.googleMapsClient.distanceMatrix({
+                    origins: locationsOrigins,
+                    destinations: locationsDestinations
+                }, (err, response) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    for (let r = 0; r < response.json.rows.length; r++) {
+                        distances[origins[r].id] = {};
+                        for (let e = 0; e < response.json.rows[r].elements.length; e++) {
+                            distances[origins[r].id][destinations[e].id] = new distance_1.default({
+                                distance: response.json.rows[r].elements[e].distance.value,
+                                duration: response.json.rows[r].elements[e].duration.value
+                            });
+                        }
+                    }
+                    return resolve(distances);
+                });
+            });
+        });
+    }
+    getGoogleDirection(origin, destination, time) {
+        return new Promise((resolve, reject) => {
+            this.googleMapsClient.directions({
+                origin: origin,
+                destination: destination,
+                departure_time: time
+            }, (err, response) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                }
+                const direction = {
+                    distance: response.json.routes[0].legs[0].distance.value,
+                    duration: response.json.routes[0].legs[0].duration.value,
+                    polyline: this.decodePolyline(response.json.routes[0].overview_polyline.points)
+                };
+                resolve(direction);
+            });
+        });
+    }
+    decodePolyline(encoded) {
+        const points = new Array();
+        let index = 0;
+        let lat = 0, lng = 0;
+        while (index < encoded.length) {
+            var b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++).charCodeAt(0) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            var dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++).charCodeAt(0) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            var dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+            points.push(new latlng_1.default({ lat: (lat / 1E5), lng: (lng / 1E5) }));
+        }
+        return points;
+    }
 }
-exports.Google = Google;
+exports.GoogleService = GoogleService;
+exports.googleService = new GoogleService();
 //# sourceMappingURL=google.service.js.map

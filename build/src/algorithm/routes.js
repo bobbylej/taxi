@@ -18,6 +18,13 @@ function default_1(server, serverConfigs) {
             handler: algorithmController.distances
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/simulation',
+        config: {
+            handler: algorithmController.simulation
+        }
+    });
 }
 exports.default = default_1;
 //# sourceMappingURL=routes.js.map

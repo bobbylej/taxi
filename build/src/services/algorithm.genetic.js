@@ -37,7 +37,7 @@ class AlgorithmGenetic extends algorithm_1.Algorithm {
             }
             this.algorithmTime = new Date().getTime() - this.startTime;
             console.log('Genetic');
-            this.logPath(this.bestPath);
+            console.log(this.bestPath.toString());
             return this.bestPath;
         });
     }

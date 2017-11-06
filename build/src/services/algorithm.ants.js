@@ -32,7 +32,6 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
             this.initPheromones();
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
             for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
-                console.log('Ants Iteration', i);
                 for (let m = 0; m < this.antsAmount; m++) {
                     this.runAnt();
                 }
@@ -40,7 +39,7 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
             }
             this.algorithmTime = new Date().getTime() - this.startTime;
             console.log('Ants');
-            this.logPath(this.bestPath);
+            console.log(this.bestPath.toString());
             return this.bestPath;
         });
     }
@@ -270,8 +269,11 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
         return (1 - this.pheromonDecayCoefficient) * pheromone + this.pheromonDecayCoefficient * pheromonInitialValue;
     }
     getInitPheromone(path, edge, nodes) {
-        const nearestEdge = this.findNextNearestEdge(path, edge.endNode, nodes);
-        const pheromonInitialValue = 1 / (nearestEdge.weight * Object.keys(this.nodes).length);
+        let pheromonInitialValue = 1 / edge.weight;
+        if (Object.keys(nodes).length > 0) {
+            const nearestEdge = this.findNextNearestEdge(path, edge.endNode, nodes);
+            pheromonInitialValue = 1 / (nearestEdge.weight * Object.keys(this.nodes).length);
+        }
         return this.pheromonDecayCoefficient * pheromonInitialValue;
     }
 }

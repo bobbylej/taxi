@@ -14,6 +14,7 @@ const algorithm_1 = require("./../services/algorithm");
 const algorithm_ants_1 = require("./../services/algorithm.ants");
 const algorithm_bees_1 = require("./../services/algorithm.bees");
 const algorithm_genetic_1 = require("./../services/algorithm.genetic");
+const simulation_1 = require("./../services/simulation");
 class AlgorithmController {
     constructor(configs) {
         this.configs = configs;
@@ -55,14 +56,28 @@ class AlgorithmController {
     }
     distances(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const clients = this.fileService.readInput('clients1.json');
-            const drivers = this.fileService.readInput('drivers.json');
+            const clients = this.fileService.readInput('clients2.json');
+            let drivers = this.fileService.readInput('drivers.json');
+            drivers = drivers.slice(5, 7);
             this.algorithm = new algorithm_1.Algorithm(clients, drivers);
-            // this.algorithm.distances = await this.algorithm.getDistances();
-            const direction = yield this.algorithm.getGoogleDirection(clients[0].startLocation, clients[0].endLocation);
+            this.algorithm.distances = yield this.algorithm.getDistances();
+            // const direction = await googleService.getGoogleDirection(clients[0].startLocation, clients[0].endLocation, clients[0].time);
             reply({
-                // distances: this.algorithm.distances,
-                direction: direction
+                distances: this.algorithm.distances,
+            });
+        });
+    }
+    simulation(request, reply) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const clients = this.fileService.readInput('clients2.json');
+            let drivers = this.fileService.readInput('drivers.json');
+            drivers = drivers.slice(0, 5);
+            const distances = this.fileService.readInput('distances3.json');
+            const simulation = new simulation_1.Simulation(clients, drivers, distances);
+            const duration = simulation.start();
+            //test
+            reply({
+                duration: duration
             });
         });
     }

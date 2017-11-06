@@ -8,6 +8,7 @@ class Client {
         this.startLocation = new latlng_1.default(client.startLocation);
         this.endLocation = new latlng_1.default(client.endLocation);
         this.distance = client.distance;
+        this.time = client.time;
     }
 }
 exports.default = Client;

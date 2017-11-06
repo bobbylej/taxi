@@ -18,7 +18,7 @@ export class AlgorithmAnts extends Algorithm {
   iterationAmount = 300;
   minIterationAmount = 1;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
@@ -30,7 +30,6 @@ export class AlgorithmAnts extends Algorithm {
     this.initPheromones();
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
     for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
-      console.log('Ants Iteration', i);
       for (let m = 0; m < this.antsAmount; m++) {
         this.runAnt();
       }
@@ -38,7 +37,7 @@ export class AlgorithmAnts extends Algorithm {
     }
     this.algorithmTime = new Date().getTime() - this.startTime;
     console.log('Ants');
-    this.logPath(this.bestPath);
+    console.log(this.bestPath.toString());
     return this.bestPath;
   }
 
@@ -281,8 +280,11 @@ export class AlgorithmAnts extends Algorithm {
   }
 
   getInitPheromone(path: Path, edge: Edge, nodes: any): number {
-    const nearestEdge = this.findNextNearestEdge(path, edge.endNode, nodes);
-    const pheromonInitialValue = 1 / (nearestEdge.weight * Object.keys(this.nodes).length);
+    let pheromonInitialValue = 1 / edge.weight;
+    if (Object.keys(nodes).length > 0) {
+      const nearestEdge = this.findNextNearestEdge(path, edge.endNode, nodes);
+      pheromonInitialValue = 1 / (nearestEdge.weight * Object.keys(this.nodes).length);
+    }
     return this.pheromonDecayCoefficient * pheromonInitialValue;
   }
 }

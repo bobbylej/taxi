@@ -5,6 +5,6 @@
 
 **Run**
 
-* *npm run tsc-watch*
+* *gulp watch* (watch and compile typescript and public JSON files)
 * *npm run watch* (restart the application when files change)
 

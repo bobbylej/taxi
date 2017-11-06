@@ -14,7 +14,7 @@ export default class Edge {
 
   countEdge(path: Path, distances): number {
     if (!path) {
-      console.error('(algorithm.js) countEdgeWeight: path is undefined');
+      console.error('(Edge.ts) countEdge: path is undefined');
       return;
     }
     const startDriver = this.startNode.driver;

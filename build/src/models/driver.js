@@ -6,6 +6,7 @@ class Driver {
         this.id = driver.id;
         this.params = driver.params;
         this.location = new latlng_1.default(driver.location);
+        this.duration = driver.duration || 0;
     }
 }
 exports.default = Driver;
