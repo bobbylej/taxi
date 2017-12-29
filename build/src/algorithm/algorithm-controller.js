@@ -13,6 +13,7 @@ const file_service_1 = require("./../services/file.service");
 const algorithm_1 = require("./../services/algorithm");
 const algorithm_ants_1 = require("./../services/algorithm.ants");
 const algorithm_bees_1 = require("./../services/algorithm.bees");
+const algorithm_ps_abc_1 = require("../services/algorithm.ps-abc");
 const algorithm_genetic_1 = require("./../services/algorithm.genetic");
 const simulation_1 = require("./../services/simulation");
 class AlgorithmController {
@@ -78,6 +79,34 @@ class AlgorithmController {
             //test
             reply({
                 duration: duration
+            });
+        });
+    }
+    test(request, reply) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const clients = this.fileService.readInput('clients1.json');
+            const drivers = this.fileService.readInput('drivers.json');
+            // Temporary solution (to save google requests limit)
+            let distances = this.fileService.readInput('distances1on0.json');
+            const algorithmPSABC = new algorithm_ps_abc_1.AlgorithmPSABC(clients, drivers, distances);
+            algorithmPSABC.initExhaustedValues();
+            algorithmPSABC.generateInitialPaths();
+            algorithmPSABC.getBestPath();
+            const neighborPath = algorithmPSABC.generateNeighborPath(algorithmPSABC.paths[0], algorithmPSABC.initialPaths[0], false);
+            const neighborPathOnlooker = algorithmPSABC.generateNeighborPath(algorithmPSABC.paths[0], algorithmPSABC.initialPaths[0], true);
+            reply({
+                path: {
+                    weight: algorithmPSABC.paths[0].weight,
+                    path: algorithmPSABC.paths[0].toString()
+                },
+                neighborPath: {
+                    weight: neighborPath.weight,
+                    path: neighborPath.toString()
+                },
+                neighborPathOnlooker: {
+                    weight: neighborPathOnlooker.weight,
+                    path: neighborPathOnlooker.toString()
+                },
             });
         });
     }

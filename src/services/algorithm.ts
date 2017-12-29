@@ -13,9 +13,9 @@ import { helperService } from './helper.service';
 
 export class Algorithm {
   distances;
-  nodes;
-  clients;
-  drivers;
+  nodes: Array<Array<Node>>;
+  clients: Array<Client>;
+  drivers: Array<Driver>;
 
   algorithmMaxTime = 1000;
   startTime: number;

@@ -27,6 +27,19 @@ export class HelperService {
       return true;
     }
   }
+
+  findIndex(array: Array<any>, compareObject: any): number {
+    let index = -1;
+    array.forEach((item, i) => {
+      const keys = Object.keys(compareObject);
+      let match = true;
+      keys.forEach(key => {
+        match = match && item[key] === compareObject[key];
+      })
+      index = match ? i : index;
+    });
+    return index;
+  }
 }
 
 export const helperService = new HelperService();

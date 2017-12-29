@@ -31,4 +31,12 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
       handler: algorithmController.simulation
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/test',
+    config: {
+      handler: algorithmController.test
+    }
+  });
 }

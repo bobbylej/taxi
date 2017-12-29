@@ -25,6 +25,13 @@ function default_1(server, serverConfigs) {
             handler: algorithmController.simulation
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/test',
+        config: {
+            handler: algorithmController.test
+        }
+    });
 }
 exports.default = default_1;
 //# sourceMappingURL=routes.js.map

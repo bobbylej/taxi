@@ -14,6 +14,7 @@ import { Algorithm } from './../services/algorithm';
 import { AlgorithmAnts } from './../services/algorithm.ants';
 import { AlgorithmAntsMy } from './../services/algorithm.ants.my';
 import { AlgorithmBees } from './../services/algorithm.bees';
+import { AlgorithmPSABC } from './../services/algorithm.ps-abc';
 import { AlgorithmGenetic } from './../services/algorithm.genetic';
 import { AlgorithmNaive } from './../services/algorithm.naive';
 // Services
@@ -38,6 +39,7 @@ export class Simulation {
     let globalTime = 0;
     let fullDuration = 0;
 
+    console.log('clients: ', this.clients.length);
     for (const client of this.clients) {
       waitingClients.push(client);
       globalTime = client.time;
@@ -47,7 +49,7 @@ export class Simulation {
       console.log('waitingClients: ', waitingClients.length);
       freeDrivers = this.getFreeDrivers(driversRoutes, globalTime);
       console.log('freeDrivers: ', freeDrivers.length);
-      const algorithm = new AlgorithmAnts(waitingClients, freeDrivers, this.distances);
+      const algorithm = new AlgorithmPSABC(waitingClients, freeDrivers);
       const pathAnts = await algorithm.findBestPath();
       driversRoutes = await this.getDriversRoutesFromPath(pathAnts);
     }
@@ -110,6 +112,7 @@ export class Simulation {
 
   getWaitingClients(waitingClients: Array<Client>, driversRoutes: any, time: number): Array<Client> {
     const newWaitingClients = new Array<Client>();
+    // console.log(JSON.stringify(driversRoutes))
     for (const driver of this.drivers) {
       if (driversRoutes[driver.id]) {
         for (const route of driversRoutes[driver.id]) {
@@ -126,10 +129,21 @@ export class Simulation {
           } else if (route.timeStart <= time && route.timeEnd > time) {
             if (!route.hired) {
               route.client.time = time;
-              newWaitingClients.push(route.client);
+              let index = helperService.findIndex(newWaitingClients, {id: route.client.id});
+              if (index === -1) {
+                newWaitingClients.push(route.client);
+              }
+            } else {
+              let index = helperService.findIndex(waitingClients, {id: route.client.id});
+              if (index !== -1) {
+                waitingClients.splice(index, 1);
+              }
             }
           } else if (route.timeStart > time) {
-            newWaitingClients.push(route.client);
+            let index = helperService.findIndex(newWaitingClients, {id: route.client.id});
+            if (index === -1) {
+              newWaitingClients.push(route.client);
+            }
           }
         }
       }
@@ -160,7 +174,7 @@ export class Simulation {
       const client = edge.endNode.client;
       const clientIndex = path.driversPaths[driver.id].indexOf(client.id);
       const driverPath = path.driversPaths[driver.id].slice(0, clientIndex);
-      let startTime = client.time;
+      let startTime = parseInt(client.time + '');
       if (!driversRoutes[driver.id]) {
         driversRoutes[driver.id] = new Array<Route>();
       } else if (driversRoutes[driver.id][driversRoutes[driver.id].length - 1].timeEnd > startTime) {
@@ -170,30 +184,22 @@ export class Simulation {
       if (driverPath.length > 0) {
         const lastClient: Client = driverPath[driverPath.length - 1];
         routeToClient = await this.getDirection(lastClient.endLocation, client.startLocation, client.time);
-        driversRoutes[driver.id].push(new Route({
-          index: index,
-          timeStart: startTime,
-          timeEnd: startTime + routeToClient.duration / 1000,
-          direction: routeToClient,
-          hired: false,
-          client: client
-        }));
       } else {
         routeToClient = await this.getDirection(driver.location, client.startLocation, client.time);
-        driversRoutes[driver.id].push(new Route({
-          index: index,
-          timeStart: startTime,
-          timeEnd: startTime + routeToClient.duration / 1000,
-          direction: routeToClient,
-          hired: false,
-          client: client
-        }));
       }
+      driversRoutes[driver.id].push(new Route({
+        index: index,
+        timeStart: startTime,
+        timeEnd: startTime + routeToClient.duration,
+        direction: routeToClient,
+        hired: false,
+        client: client
+      }));
       const routeWithClient = await this.getDirection(client.startLocation, client.endLocation, client.time);
       driversRoutes[driver.id].push(new Route({
         index: index,
-        timeStart: startTime + routeToClient.duration / 1000,
-        timeEnd: startTime + routeToClient.duration / 1000 + routeWithClient.duration / 1000,
+        timeStart: startTime + routeToClient.duration,
+        timeEnd: startTime + routeToClient.duration + routeWithClient.duration,
         direction: routeWithClient,
         hired: true,
         client: client

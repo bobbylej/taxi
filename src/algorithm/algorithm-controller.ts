@@ -13,10 +13,12 @@ import Node from './../models/node';
 import Path from './../models/path';
 // Services
 import { FileService } from './../services/file.service';
+import { SPVService } from "../services/spv.service";
 import { Algorithm } from './../services/algorithm';
 import { AlgorithmAnts } from './../services/algorithm.ants';
 import { AlgorithmAntsMy } from './../services/algorithm.ants.my';
 import { AlgorithmBees } from './../services/algorithm.bees';
+import { AlgorithmPSABC } from "../services/algorithm.ps-abc";
 import { AlgorithmGenetic } from './../services/algorithm.genetic';
 import { AlgorithmNaive } from './../services/algorithm.naive';
 import { Simulation } from './../services/simulation';
@@ -110,6 +112,36 @@ export default class AlgorithmController {
 
     reply({
       duration: duration
+    });
+  }
+
+  public async test(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    const clients = this.fileService.readInput('clients1.json');
+    const drivers = this.fileService.readInput('drivers.json');
+
+    // Temporary solution (to save google requests limit)
+    let distances = this.fileService.readInput('distances1on0.json');
+
+    const algorithmPSABC = new AlgorithmPSABC(clients, drivers, distances);
+    algorithmPSABC.initExhaustedValues();
+    algorithmPSABC.generateInitialPaths();
+    algorithmPSABC.getBestPath();
+    const neighborPath = algorithmPSABC.generateNeighborPath(algorithmPSABC.paths[0], algorithmPSABC.initialPaths[0], false);
+    const neighborPathOnlooker = algorithmPSABC.generateNeighborPath(algorithmPSABC.paths[0], algorithmPSABC.initialPaths[0], true);
+
+    reply({
+      path: {
+        weight: algorithmPSABC.paths[0].weight,
+        path: algorithmPSABC.paths[0].toString()
+      },
+      neighborPath: {
+        weight: neighborPath.weight,
+        path: neighborPath.toString()
+      },
+      neighborPathOnlooker: {
+        weight: neighborPathOnlooker.weight,
+        path: neighborPathOnlooker.toString()
+      },
     });
   }
 }
