@@ -12,37 +12,47 @@ import { SPVService } from './spv.service';
 
 export class AlgorithmPSABC extends Algorithm {
   initialExhaustedValue = 10;
-  modifiesPathAmount = 3;
+  // modifiesPathAmount = 3;
   beesAmount = 40;
-  iterationAmount = 1100;
+  // iterationAmount = 1100;
+  N = 0.5;
   exhaustedValues: Array<number>;
   paths: Array<Path>;
   initialPaths: Array<Path>;
   spvService = new SPVService();
-  N = 2;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
-  async findBestPath(): Promise<Path> {
-    if (!this.distances) {
-      this.distances = await this.getDistances();
+  async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {
+    if (!this.distances || getDistances) {
+      this.distances = Object.assign(this.distances, await this.getDistances(getAllDistances));
     }
     this.startTime = new Date().getTime();
+    // console.log('step', 1);
     this.initExhaustedValues();
+    // console.log('step', 2);
     this.generateInitialPaths();
+    // console.log('step', 3);
     this.getBestPath();
+    // console.log('step', 4);
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-    for (let i = 0; this.isTimeUp(); i++) {
+    for (let i = 0; !this.isTimeUp(); i++) {
+      // console.log('step', 5.1);
       this.explorePaths();
+      // console.log('step', 5.2);
       this.explorePathsWithProbability();
+      // console.log('step', 5.3);
       this.findNewPath();
+      // console.log('step', 5.4);
       this.getBestPath();
+      // console.log('step', 5.5);
     }
     this.algorithmTime = new Date().getTime() - this.startTime;
-    console.log('PS-ABC');
-    console.log(this.bestPath.toString());
+    // console.log('PS-ABC');
+    // console.log(this.bestPath.weight);
+    // console.log(this.bestPath.toString());
     return this.bestPath;
   }
 
@@ -144,7 +154,7 @@ export class AlgorithmPSABC extends Algorithm {
     const path = new Path({});
     let availableNodes = Object.assign({}, this.nodes);
     const nodesAmount = Object.keys(availableNodes).length;
-    const startNode = new Node({});
+    const startNode = new Node();
     for (let n = 0; n < nodesAmount; n++) {
       let currentNode: Node;
       if (n === 0) {
@@ -325,10 +335,11 @@ export class AlgorithmPSABC extends Algorithm {
     vector.forEach((value, index) => {
       const phi = Math.random() * 2 - 1;
       const psi = Math.random() * this.N;
-      const weight = 1 / (1 + Math.exp(-1 * weights.path / weights.initialPath));
+      const weight = weights.initialPath > 0 ? 1 / (1 + Math.exp(-1 * weights.path / weights.initialPath)) : 1;
       const phi1 = weight;
       const phi2 = isOnlookerBee ? weight : 1;
       let newValue = value * weight + phi * phi1 * (value - compareVector[index]) + psi * phi2 * (bestVector[index] - value);
+
       if (limits) {
         if (limits[index].min !== undefined) {
           if (newValue < limits[index].min && newValue >= 0) {

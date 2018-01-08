@@ -21,16 +21,16 @@ class AlgorithmBees extends algorithm_1.Algorithm {
         this.beesAmount = 40;
         this.iterationAmount = 1100;
     }
-    findBestPath() {
+    findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.distances) {
-                this.distances = yield this.getDistances();
+            if (!this.distances || getDistances) {
+                this.distances = Object.assign(this.distances, yield this.getDistances(getAllDistances));
             }
             this.startTime = new Date().getTime();
             this.initExhaustedValues();
             this.generateInitialPaths();
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-            for (let i = 0; this.isTimeUp(); i++) {
+            for (let i = 0; !this.isTimeUp(); i++) {
                 console.log('check0');
                 this.explorePaths();
                 console.log('check1');

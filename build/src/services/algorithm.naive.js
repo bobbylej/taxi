@@ -18,10 +18,10 @@ class AlgorithmNaive extends algorithm_1.Algorithm {
         super(clients, drivers, distances);
         this.iterations = 0;
     }
-    findBestPath() {
+    findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.distances) {
-                this.distances = yield this.getDistances();
+            if (!this.distances || getDistances) {
+                this.distances = Object.assign(this.distances, yield this.getDistances(getAllDistances));
             }
             this.iterations = 0;
             this.startTime = new Date().getTime();

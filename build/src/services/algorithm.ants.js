@@ -14,32 +14,36 @@ const path_1 = require("./../models/path");
 // Services
 const algorithm_1 = require("./algorithm");
 class AlgorithmAnts extends algorithm_1.Algorithm {
+    // iterationAmount = 300;
+    // minIterationAmount = 1;
     constructor(clients, drivers, distances) {
         super(clients, drivers, distances);
-        this.pheromonDecayCoefficient = 0.1;
-        this.betterEdgeCoefficient = 0.6;
-        this.importanceInformation = 1;
-        this.antsAmount = 100;
-        this.iterationAmount = 300;
-        this.minIterationAmount = 1;
+        this.pheromonDecayCoefficient = 0.25;
+        this.pheromonLocalDecayCoefficient = 0.1;
+        this.betterEdgeCoefficient = 0.5;
+        this.importanceInformation = 2;
+        this.antsAmount = 40;
     }
-    findBestPath() {
+    findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.distances) {
-                this.distances = yield this.getDistances();
+            if (!this.distances || getDistances) {
+                this.distances = Object.assign(this.distances, yield this.getDistances(getAllDistances));
             }
-            this.startTime = new Date().getTime();
+            // this.startTime = new Date().getTime();
             this.initPheromones();
+            // this.algorithmTime = new Date().getTime() - this.startTime;
+            // console.log('Time init', this.algorithmTime);
+            this.startTime = new Date().getTime();
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-            for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
+            for (let i = 0; !this.isTimeUp(); i++) {
                 for (let m = 0; m < this.antsAmount; m++) {
                     this.runAnt();
                 }
                 this.globalUpdatePheromones();
             }
             this.algorithmTime = new Date().getTime() - this.startTime;
-            console.log('Ants');
-            console.log(this.bestPath.toString());
+            // console.log('Ants');
+            // console.log(this.bestPath.toString());
             return this.bestPath;
         });
     }
@@ -188,13 +192,13 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
     initPheromones() {
         this.pheromones = {};
         if (this.nodes) {
-            const startNode = new node_1.default({});
+            const startNode = new node_1.default();
             this.pheromones[startNode.id] = {};
             for (var key1 in this.nodes) {
                 if (this.nodes.hasOwnProperty(key1)) {
                     const clientNodes1 = this.nodes[key1];
                     clientNodes1.forEach(node1 => {
-                        const path = new path_1.default({});
+                        const path = new path_1.default();
                         const edge = new edge_1.default({
                             startNode,
                             endNode: new node_1.default({
@@ -213,7 +217,7 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
                             if (this.nodes.hasOwnProperty(key2) && key1 !== key2) {
                                 const clientNodes2 = this.nodes[key2];
                                 clientNodes2.forEach(node2 => {
-                                    const path = new path_1.default({});
+                                    const path = new path_1.default();
                                     const startEdge = new edge_1.default({
                                         startNode,
                                         endNode: new node_1.default({
@@ -266,7 +270,7 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
         }
         const pheromonInitialValue = 1 / (nearestEdgeWeight * nodesAmount + path.countPath());
         const pheromone = this.pheromones[edge.startNode.id][edge.endNode.id];
-        return (1 - this.pheromonDecayCoefficient) * pheromone + this.pheromonDecayCoefficient * pheromonInitialValue;
+        return (1 - this.pheromonLocalDecayCoefficient) * pheromone + this.pheromonLocalDecayCoefficient * pheromonInitialValue;
     }
     getInitPheromone(path, edge, nodes) {
         let pheromonInitialValue = 1 / edge.weight;

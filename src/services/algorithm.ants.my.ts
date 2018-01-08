@@ -19,19 +19,19 @@ export class AlgorithmAntsMy extends Algorithm {
   iterationAmount = 300;
   minIterationAmount = 1;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
-  async findBestPath(): Promise<Path> {
-    if (!this.distances) {
-      this.distances = await this.getDistances();
+  async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {
+    if (!this.distances || getDistances) {
+      this.distances = Object.assign(this.distances, await this.getDistances(getAllDistances));
     }
     this.startTime = new Date().getTime();
     this.initPheromones();
     console.log('Ants My', new Date().getTime() - this.startTime);
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-    for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
+    for (let i = 0; !this.isTimeUp(); i++) {
       for (let m = 0; m < this.antsAmount; m++) {
         const path = this.findPath();
         if (!this.bestPath || this.bestPath.weight > path.weight) {

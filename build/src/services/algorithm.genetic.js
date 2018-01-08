@@ -16,28 +16,28 @@ const algorithm_1 = require("./algorithm");
 class AlgorithmGenetic extends algorithm_1.Algorithm {
     constructor(clients, drivers, distances) {
         super(clients, drivers, distances);
-        this.crossoverProbability = 0.8;
-        this.mutationProbability = 0.9;
-        this.gentypesAmount = 320;
+        this.crossoverProbability = 0.6;
+        this.mutationProbability = 0.6;
+        this.gentypesAmount = 40;
         this.iterationAmount = 100;
     }
-    findBestPath() {
+    findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.distances) {
-                this.distances = yield this.getDistances();
+            if (!this.distances || getDistances) {
+                this.distances = Object.assign(this.distances, yield this.getDistances(getAllDistances));
             }
             this.startTime = new Date().getTime();
             this.generateInitialPaths();
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-            for (let i = 0; this.isTimeUp(); i++) {
+            for (let i = 0; !this.isTimeUp(); i++) {
                 this.selectPaths();
                 this.crossoverPaths();
                 this.mutatePaths();
                 this.getBestPath();
             }
             this.algorithmTime = new Date().getTime() - this.startTime;
-            console.log('Genetic');
-            console.log(this.bestPath.toString());
+            // console.log('Genetic');
+            // console.log(this.bestPath.toString());
             return this.bestPath;
         });
     }

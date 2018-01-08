@@ -4,12 +4,8 @@ const client_1 = require("./client");
 const driver_1 = require("./driver");
 class Node {
     constructor(node) {
-        if (node.driver) {
-            this.driver = new driver_1.default(node.driver);
-        }
-        if (node.client) {
-            this.client = new client_1.default(node.client);
-        }
+        this.driver = node && node.driver ? new driver_1.default(node.driver) : undefined;
+        this.client = node && node.client ? new client_1.default(node.client) : undefined;
     }
     get id() {
         let id = '';

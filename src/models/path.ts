@@ -7,10 +7,10 @@ export default class Path {
   edges: Array<Edge>;
   driversPaths: any;
 
-  constructor(path: any) {
-    this.weight = path.weight;
-    this.edges = path.edges || [];
-    this.driversPaths = path.driversPaths || {};
+  constructor(path?: any) {
+    this.weight = path ? path.weight : undefined;
+    this.edges = path ? path.edges || [] : [];
+    this.driversPaths = path ? path.driversPaths || {} : {};
   }
 
   countPath() {

@@ -17,6 +17,8 @@ const helper_service_1 = require("./helper.service");
 class Algorithm {
     constructor(clients, drivers, distances) {
         this.algorithmMaxTime = 1000;
+        this.hasClientTimeLimit = false;
+        this.clientMaxWaitingTime = 20 * 60; // 20min
         this.clients = clients;
         this.drivers = drivers;
         this.nodes = this.generateNodes();
@@ -72,22 +74,55 @@ class Algorithm {
         }
         return nodes;
     }
-    canDriverGetClient(client, driver) {
+    canDriverGetClient(client, driver, driverPath) {
         if (client.params && client.params.length) {
             if (!(driver.params && driver.params.length)) {
                 return false;
             }
-            return helper_service_1.helperService.isSuperArray(driver.params, client.params);
+            if (!helper_service_1.helperService.isSuperArray(driver.params, client.params)) {
+                return false;
+            }
+            if (this.hasClientTimeLimit && driverPath && this.countTimeToGetClient(client, driver, driverPath) > 60 * 20) {
+                return false;
+            }
         }
         return true;
     }
-    getDistances() {
+    countTimeToGetClient(client, driver, driverPath) {
+        const path = new path_1.default();
+        if (driverPath) {
+            driverPath.forEach((clientInPath, index) => {
+                let startNode = new node_1.default();
+                if (index > 0) {
+                    startNode = path.edges[index - 1].endNode;
+                }
+                const endNode = new node_1.default({
+                    driver: driver,
+                    client: clientInPath
+                });
+                const edge = new edge_1.default({ startNode, endNode });
+                edge.weight = edge.countEdge(path, this.distances);
+                path.addEdgeToPath(edge);
+            });
+        }
+        let prevNode = path.edges && path.edges.length ? path.edges[path.edges.length - 1].endNode : new node_1.default();
+        const edge = new edge_1.default({
+            startNode: prevNode,
+            endNode: new node_1.default({ driver, client })
+        });
+        edge.weight = edge.countEdge(path, this.distances);
+        path.addEdgeToPath(edge);
+        path.weight = path.countPath();
+        // Weight of path/edge is time of taxi's route
+        return path.weight;
+    }
+    getDistances(getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('getDistances; clients: ', this.clients.length, 'taxi: ', this.drivers.length);
+            // console.log('getDistances; clients: ', this.clients.length, 'taxi: ', this.drivers.length);
             const finalDistances = {};
             const promises = new Array();
             let promiseAmount = 0;
-            if (this.clients) {
+            if (getAllDistances && this.clients) {
                 this.clients.forEach((client1) => {
                     let origins = [];
                     let destinations = [];
@@ -99,15 +134,15 @@ class Algorithm {
                         id: client1.id,
                         location: client1.endLocation
                     });
-                    // promises.push(googleService.getGoogleDistances(origins, destinations).then(distances => {
-                    //   // tslint:disable-next-line:forin
-                    //   for (let key in distances) {
-                    //     if (!finalDistances[key]) {
-                    //       finalDistances[key] = {};
-                    //     }
-                    //     Object.assign(finalDistances[key], distances[key]);
-                    //   }
-                    // }));
+                    promises.push(google_service_1.googleService.getDistances(origins, destinations).then(distances => {
+                        // tslint:disable-next-line:forin
+                        for (let key in distances) {
+                            if (!finalDistances[key]) {
+                                finalDistances[key] = {};
+                            }
+                            Object.assign(finalDistances[key], distances[key]);
+                        }
+                    }));
                     origins = [];
                     destinations = [];
                     origins.push({
@@ -122,17 +157,17 @@ class Algorithm {
                             });
                         }
                     });
-                    // promises.push(googleService.getGoogleDistances(origins, destinations).then(distances => {
-                    //   // tslint:disable-next-line:forin
-                    //   for (let key in distances) {
-                    //     if (!finalDistances[key]) {
-                    //       finalDistances[key] = {};
-                    //     }
-                    //     Object.assign(finalDistances[key], distances[key]);
-                    //     console.log('--------------------------------------------------------------------');
-                    //     console.log(JSON.stringify(finalDistances));
-                    //   }
-                    // }));
+                    promises.push(google_service_1.googleService.getDistances(origins, destinations).then(distances => {
+                        // tslint:disable-next-line:forin
+                        for (let key in distances) {
+                            if (!finalDistances[key]) {
+                                finalDistances[key] = {};
+                            }
+                            Object.assign(finalDistances[key], distances[key]);
+                            // console.log('--------------------------------------------------------------------');
+                            // console.log(JSON.stringify(finalDistances));
+                        }
+                    }));
                 });
             }
             if (this.drivers) {
@@ -149,28 +184,29 @@ class Algorithm {
                             location: client.startLocation
                         });
                     });
-                    promises.push(google_service_1.googleService.getGoogleDistances(origins, destinations)
+                    promises.push(google_service_1.googleService.getDistances(origins, destinations)
                         .then(distances => {
                         Object.assign(finalDistances, distances);
-                        console.log('--------------------------------------------------------------------');
-                        console.log(JSON.stringify(finalDistances));
+                        // console.log('--------------------------------------------------------------------');
+                        // console.log(JSON.stringify(finalDistances));
+                    })
+                        .catch(error => {
+                        console.error('ERROR', error);
+                        throw error;
                     }));
                 });
             }
-            return new Promise((resolve, reject) => {
-                Promise.all(promises).then((values) => {
-                    console.log('getDistances finished;');
-                    return resolve(finalDistances);
-                })
-                    .catch(error => {
-                    console.error(error);
-                    return reject(error);
-                });
+            return Promise.all(promises).then((values) => {
+                return finalDistances;
+            })
+                .catch(error => {
+                console.error('ERROR', error);
+                throw error;
             });
         });
     }
     isTimeUp() {
-        return new Date().getTime() - this.startTime < this.algorithmMaxTime;
+        return new Date().getTime() - this.startTime >= this.algorithmMaxTime;
     }
 }
 exports.Algorithm = Algorithm;

@@ -57,11 +57,11 @@ class AlgorithmController {
     }
     distances(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const clients = this.fileService.readInput('clients2.json');
-            let drivers = this.fileService.readInput('drivers.json');
-            drivers = drivers.slice(5, 7);
+            const clients = this.fileService.readInput('test1.clients.json');
+            let drivers = this.fileService.readInput('test1.taxi.json');
+            // drivers = drivers.slice(36,37);
             this.algorithm = new algorithm_1.Algorithm(clients, drivers);
-            this.algorithm.distances = yield this.algorithm.getDistances();
+            this.algorithm.distances = yield this.algorithm.getDistances(true);
             // const direction = await googleService.getGoogleDirection(clients[0].startLocation, clients[0].endLocation, clients[0].time);
             reply({
                 distances: this.algorithm.distances,
@@ -70,13 +70,17 @@ class AlgorithmController {
     }
     simulation(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const clients = this.fileService.readInput('clients2.json');
-            let drivers = this.fileService.readInput('drivers.json');
-            drivers = drivers.slice(0, 5);
-            const distances = this.fileService.readInput('distances3.json');
-            const simulation = new simulation_1.Simulation(clients, drivers, distances);
-            const duration = simulation.start();
-            //test
+            let clients = this.fileService.readInput('test1.clients.json');
+            let drivers = this.fileService.readInput('test1.taxi.json');
+            // drivers = drivers.slice(0,10);
+            // const distances: Array<Distance> = this.fileService.readInput('test1.distances.json');
+            console.log('--------------------start');
+            let duration = [];
+            for (let i = 0; i < 50; i++) {
+                const simulation = new simulation_1.Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)));
+                duration.push(yield simulation.start());
+            }
+            console.log('--------------------end');
             reply({
                 duration: duration
             });

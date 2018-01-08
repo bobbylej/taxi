@@ -12,13 +12,13 @@ import { Algorithm } from './algorithm';
 export class AlgorithmNaive extends Algorithm {
   iterations = 0;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
-  async findBestPath(): Promise<Path> {
-    if (!this.distances) {
-      this.distances = await this.getDistances();
+  async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {
+    if (!this.distances || getDistances) {
+      this.distances = Object.assign(this.distances, await this.getDistances(getAllDistances));
     }
     this.iterations = 0;
     this.startTime = new Date().getTime();

@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const edge_1 = require("./edge");
 class Path {
     constructor(path) {
-        this.weight = path.weight;
-        this.edges = path.edges || [];
-        this.driversPaths = path.driversPaths || {};
+        this.weight = path ? path.weight : undefined;
+        this.edges = path ? path.edges || [] : [];
+        this.driversPaths = path ? path.driversPaths || {} : {};
     }
     countPath() {
         let pathWeight = 0;

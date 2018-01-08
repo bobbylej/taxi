@@ -24,16 +24,16 @@ class AlgorithmAntsMy extends algorithm_1.Algorithm {
         this.iterationAmount = 300;
         this.minIterationAmount = 1;
     }
-    findBestPath() {
+    findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.distances) {
-                this.distances = yield this.getDistances();
+            if (!this.distances || getDistances) {
+                this.distances = Object.assign(this.distances, yield this.getDistances(getAllDistances));
             }
             this.startTime = new Date().getTime();
             this.initPheromones();
             console.log('Ants My', new Date().getTime() - this.startTime);
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-            for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
+            for (let i = 0; !this.isTimeUp(); i++) {
                 for (let m = 0; m < this.antsAmount; m++) {
                     const path = this.findPath();
                     if (!this.bestPath || this.bestPath.weight > path.weight) {

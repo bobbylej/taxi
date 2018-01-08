@@ -10,32 +10,32 @@ import Path from './../models/path';
 import { Algorithm } from './algorithm';
 
 export class AlgorithmGenetic extends Algorithm {
-  crossoverProbability = 0.8;
-  mutationProbability = 0.9;
-  gentypesAmount = 320;
+  crossoverProbability = 0.6;
+  mutationProbability = 0.6;
+  gentypesAmount = 40;
   iterationAmount = 100;
   paths: Array<Path>;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
-  async findBestPath(): Promise<Path> {
-    if (!this.distances) {
-      this.distances = await this.getDistances();
+  async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {
+    if (!this.distances || getDistances) {
+      this.distances = Object.assign(this.distances, await this.getDistances(getAllDistances));
     }
     this.startTime = new Date().getTime();
     this.generateInitialPaths();
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-    for (let i = 0; this.isTimeUp(); i++) {
+    for (let i = 0; !this.isTimeUp(); i++) {
       this.selectPaths();
       this.crossoverPaths();
       this.mutatePaths();
       this.getBestPath();
     }
     this.algorithmTime = new Date().getTime() - this.startTime;
-    console.log('Genetic');
-    console.log(this.bestPath.toString());
+    // console.log('Genetic');
+    // console.log(this.bestPath.toString());
     return this.bestPath;
   }
 

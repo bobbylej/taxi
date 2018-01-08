@@ -84,13 +84,13 @@ export default class AlgorithmController {
   }
 
   public async distances(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    const clients: Array<Client> = this.fileService.readInput('clients2.json');
-    let drivers = this.fileService.readInput('drivers.json');
-    drivers = drivers.slice(5,7);
+    const clients: Array<Client> = this.fileService.readInput('test1.clients.json');
+    let drivers = this.fileService.readInput('test1.taxi.json');
+    // drivers = drivers.slice(36,37);
 
     this.algorithm = new Algorithm(clients, drivers);
 
-    this.algorithm.distances = await this.algorithm.getDistances();
+    this.algorithm.distances = await this.algorithm.getDistances(true);
 
     // const direction = await googleService.getGoogleDirection(clients[0].startLocation, clients[0].endLocation, clients[0].time);
 
@@ -101,14 +101,18 @@ export default class AlgorithmController {
   }
 
   public async simulation(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    const clients: Array<Client> = this.fileService.readInput('clients2.json');
-    let drivers = this.fileService.readInput('drivers.json');
-    drivers = drivers.slice(0,5);
-    const distances: Array<Distance> = this.fileService.readInput('distances3.json');
+    let clients: Array<Client> = this.fileService.readInput('test1.clients.json');
+    let drivers = this.fileService.readInput('test1.taxi.json');
+    // drivers = drivers.slice(0,10);
+    // const distances: Array<Distance> = this.fileService.readInput('test1.distances.json');
 
-    const simulation = new Simulation(clients, drivers, distances);
-    const duration = simulation.start();
-    //test
+    console.log('--------------------start');
+    let duration = [];
+    for (let i = 0; i < 50; i++) {
+      const simulation = new Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)));
+      duration.push(await simulation.start());
+    }
+    console.log('--------------------end');
 
     reply({
       duration: duration

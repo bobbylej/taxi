@@ -17,19 +17,19 @@ export class AlgorithmBees extends Algorithm {
   exhaustedValues: Array<number>;
   paths: Array<Path>;
 
-  constructor(clients, drivers, distances?) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
     super(clients, drivers, distances);
   }
 
-  async findBestPath(): Promise<Path> {
-    if (!this.distances) {
-      this.distances = await this.getDistances();
+  async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {
+    if (!this.distances || getDistances) {
+      this.distances = Object.assign(this.distances, await this.getDistances(getAllDistances));
     }
     this.startTime = new Date().getTime();
     this.initExhaustedValues();
     this.generateInitialPaths();
     // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-    for (let i = 0; this.isTimeUp(); i++) {
+    for (let i = 0; !this.isTimeUp(); i++) {
       console.log('check0');
       this.explorePaths();
       console.log('check1');

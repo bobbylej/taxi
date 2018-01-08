@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const gapi = require("@google/maps");
 // Models
@@ -19,60 +11,82 @@ class GoogleService {
     initGoogleApi() {
         this.googleMapsClient = gapi.createClient({
             // key: 'AIzaSyAPWbCNIq7JkMMH15K2H8EDzSCZwUD2JNI'
-            key: 'AIzaSyB0hSN1QhrjZ4Qzdu1YH3E_RvBINVCrt_A'
-            // key: 'AIzaSyBXTZogSxhfwrK_smDpOTFUBsWyoKW9ejU'
+            // key: 'AIzaSyB0hSN1QhrjZ4Qzdu1YH3E_RvBINVCrt_A'
+            key: 'AIzaSyBXTZogSxhfwrK_smDpOTFUBsWyoKW9ejU'
+            // key: 'AIzaSyBjM41yg497raGt39tY2D4uDwKB6q-f7mg'
+            // key: 'AIzaSyBwqV7_WK6S6uWGVLbY89BvTMhDaGCwNkQ'
         });
     }
-    getGoogleDistance(location1, location2) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((resolve, reject) => {
-                this.googleMapsClient.distanceMatrix({
-                    origins: { lat: location1.lat, lng: location1.lng },
-                    destinations: { lat: location2.lat, lng: location2.lng }
-                }, (err, response) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    const distance = new distance_1.default({
-                        distance: response.json.rows[0].elements[0].distance.value,
-                        duration: response.json.rows[0].elements[0].duration.value
-                    });
-                    return resolve(distance);
-                });
-            });
-        });
-    }
-    getGoogleDistances(origins, destinations) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const distances = {};
-            const locationsOrigins = [];
-            origins.forEach(origin => {
-                locationsOrigins.push(origin.location);
-            });
-            const locationsDestinations = [];
+    // async getGoogleDistance(location1: LatLng, location2: LatLng): Promise<any> {
+    //   return await new Promise((resolve, reject) => {
+    //     this.googleMapsClient.distanceMatrix({
+    //       origins: { lat: location1.lat, lng: location1.lng },
+    //       destinations: { lat: location2.lat, lng: location2.lng }
+    //     }, (err: any, response: any) => {
+    //       if (err) {
+    //         console.error(err);
+    //       }
+    //       const distance = new Distance({
+    //         distance: response.json.rows[0].elements[0].distance.value,
+    //         duration: response.json.rows[0].elements[0].duration.value
+    //       });
+    //       return resolve(distance);
+    //     });
+    //   });
+    // }
+    // async getGoogleDistances(origins: Array<{id: string, location: LatLng}>, destinations: Array<{id: string, location: LatLng}>): Promise<any> {
+    //   const distances = {};
+    //   const locationsOrigins = [];
+    //   origins.forEach(origin => {
+    //     locationsOrigins.push(origin.location);
+    //   });
+    //   const locationsDestinations = [];
+    //   destinations.forEach(destination => {
+    //     locationsDestinations.push(destination.location);
+    //   });
+    //   return await new Promise((resolve, reject) => {
+    //     this.googleMapsClient.distanceMatrix({
+    //       origins: locationsOrigins,
+    //       destinations: locationsDestinations
+    //     }, (err: any, response: any) => {
+    //       if (err) {
+    //         console.error(err);
+    //       }
+    //       for (let r = 0; r < response.json.rows.length; r++) {
+    //         distances[origins[r].id] = {};
+    //         for (let e = 0; e < response.json.rows[r].elements.length; e++) {
+    //           distances[origins[r].id][destinations[e].id] = new Distance({
+    //             distance: response.json.rows[r].elements[e].distance.value,
+    //             duration: response.json.rows[r].elements[e].duration.value
+    //           });
+    //         }
+    //       }
+    //       return resolve(distances);
+    //     });
+    //   });
+    // }
+    getDistances(origins, destinations) {
+        const distances = {};
+        origins.forEach(origin => {
             destinations.forEach(destination => {
-                locationsDestinations.push(destination.location);
+                if (!distances[origin.id]) {
+                    distances[origin.id] = {};
+                }
+                distances[origin.id][destination.id] = this.getDistance(origin.location, destination.location);
             });
-            return yield new Promise((resolve, reject) => {
-                this.googleMapsClient.distanceMatrix({
-                    origins: locationsOrigins,
-                    destinations: locationsDestinations
-                }, (err, response) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    for (let r = 0; r < response.json.rows.length; r++) {
-                        distances[origins[r].id] = {};
-                        for (let e = 0; e < response.json.rows[r].elements.length; e++) {
-                            distances[origins[r].id][destinations[e].id] = new distance_1.default({
-                                distance: response.json.rows[r].elements[e].distance.value,
-                                duration: response.json.rows[r].elements[e].duration.value
-                            });
-                        }
-                    }
-                    return resolve(distances);
-                });
-            });
+        });
+        return new Promise((resolve, reject) => resolve(distances));
+    }
+    getDistance(location1, location2) {
+        const p = 0.017453292519943295; // Math.PI / 180
+        const c = Math.cos;
+        const a = 0.5 - c((location2.lat - location1.lat) * p) / 2 +
+            c(location1.lat * p) * c(location2.lat * p) *
+                (1 - c((location2.lng - location1.lng) * p)) / 2;
+        const distance = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        return new distance_1.default({
+            distance: distance,
+            duration: distance / 60 * 3600
         });
     }
     getGoogleDirection(origin, destination, time) {
@@ -89,11 +103,27 @@ class GoogleService {
                 const direction = {
                     distance: response.json.routes[0].legs[0].distance.value,
                     duration: response.json.routes[0].legs[0].duration.value,
-                    polyline: this.decodePolyline(response.json.routes[0].overview_polyline.points)
+                    polyline: this.decodePolyline(response.json.routes[0].overview_polyline.points),
+                    locations: {
+                        start: origin,
+                        end: destination
+                    }
                 };
                 resolve(direction);
             });
         });
+    }
+    getDirection(origin, destination, time) {
+        const distance = this.getDistance(origin, destination);
+        const direction = {
+            ditance: distance.distance,
+            duration: distance.duration,
+            locations: {
+                start: origin,
+                end: destination
+            }
+        };
+        return new Promise((resolve, reject) => resolve(direction));
     }
     decodePolyline(encoded) {
         const points = new Array();

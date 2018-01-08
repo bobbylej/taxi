@@ -5,13 +5,9 @@ export default class Node {
   driver: Driver;
   client: Client;
 
-  constructor(node: any) {
-    if (node.driver) {
-      this.driver = new Driver(node.driver);
-    }
-    if (node.client) {
-      this.client = new Client(node.client);
-    }
+  constructor(node?: any) {
+    this.driver = node && node.driver ? new Driver(node.driver) : undefined;
+    this.client = node && node.client ? new Client(node.client) : undefined;
   }
 
   get id(): string {

@@ -41,7 +41,7 @@ class AlgorithmAntsR extends algorithm_1.Algorithm {
             console.log('AntsR promises', this.promisesIndexes);
             this.initPheromones();
             // for (let i = 0; i < this.iterationAmount && this.isTimeUp(); i++) {
-            for (let i = 0; i < this.minIterationAmount || this.isTimeUp(); i++) {
+            for (let i = 0; !this.isTimeUp(); i++) {
                 console.log('AntsR Iteration', i);
                 let ants = new Array(this.antsAmount);
                 const promises = new Array();
