@@ -16,13 +16,20 @@ const algorithm_1 = require("./algorithm");
 class AlgorithmAnts extends algorithm_1.Algorithm {
     // iterationAmount = 300;
     // minIterationAmount = 1;
-    constructor(clients, drivers, distances) {
+    constructor(clients, drivers, distances, params) {
         super(clients, drivers, distances);
         this.pheromonDecayCoefficient = 0.1; // pG
         this.pheromonLocalDecayCoefficient = 0.1; // pL
-        this.betterEdgeCoefficient = 0.5; // q0
+        this.betterEdgeCoefficient = 0.75; // q0
         this.importanceInformation = 1; // Beta
         this.antsAmount = 40;
+        if (params) {
+            this.pheromonDecayCoefficient = params.pheromonDecayCoefficient;
+            this.pheromonLocalDecayCoefficient = params.pheromonLocalDecayCoefficient;
+            this.betterEdgeCoefficient = params.betterEdgeCoefficient;
+            this.importanceInformation = params.importanceInformation;
+            this.antsAmount = params.antsAmount;
+        }
     }
     findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {

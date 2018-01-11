@@ -57,8 +57,8 @@ class AlgorithmController {
     }
     distances(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const clients = this.fileService.readInput('test10.clients.json');
-            let drivers = this.fileService.readInput('test10.taxi.json');
+            const clients = this.fileService.readInput('test9.clients.json');
+            let drivers = this.fileService.readInput('test9.taxi.json');
             // drivers = drivers.slice(36,37);
             this.algorithm = new algorithm_1.Algorithm(clients, drivers);
             this.algorithm.distances = yield this.algorithm.getDistances(true);
@@ -70,19 +70,109 @@ class AlgorithmController {
     }
     simulation(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            let clients = this.fileService.readInput('test10.clients.json');
-            let drivers = this.fileService.readInput('test10.taxi.json');
+            let clients = this.fileService.readInput('test9.clients.json');
+            let drivers = this.fileService.readInput('test9.taxi.json');
             // drivers = drivers.slice(0,10);
-            // const distances: Array<Distance> = this.fileService.readInput('test10.distances.json');
-            console.log('--------------------start');
-            let duration = [];
-            for (let i = 0; i < 50; i++) {
-                const simulation = new simulation_1.Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)));
-                duration.push(yield simulation.start());
+            // const distances: Array<Distance> = this.fileService.readInput('test9.distances.json');
+            // let params = [
+            //   {
+            //     initialExhaustedValue: 0.25,
+            //     N: 0.1,
+            //     beesAmount: 40
+            //   },
+            //   {
+            //     initialExhaustedValue: 0.25,
+            //     N: 0.1,
+            //     beesAmount: 40
+            //   },
+            //   {
+            //     initialExhaustedValue: 0.25,
+            //     N: 0.1,
+            //     beesAmount: 40
+            //   },
+            //   {
+            //     initialExhaustedValue: 0.25,
+            //     N: 0.1,
+            //     beesAmount: 40
+            //   },
+            //   {
+            //     initialExhaustedValue: 0.25,
+            //     N: 0.1,
+            //     beesAmount: 40
+            //   }
+            // ];
+            // let params = [
+            //   {
+            //     crossoverProbability: 0.25,
+            //     mutationProbability: 0.1,
+            //     gentypesAmount: 40
+            //   },
+            //   {
+            //     crossoverProbability: 0.25,
+            //     mutationProbability: 0.1,
+            //     gentypesAmount: 40
+            //   },
+            //   {
+            //     crossoverProbability: 0.25,
+            //     mutationProbability: 0.1,
+            //     gentypesAmount: 40
+            //   },
+            //   {
+            //     crossoverProbability: 0.25,
+            //     mutationProbability: 0.1,
+            //     gentypesAmount: 40
+            //   }
+            // ];
+            let params = [
+                {
+                    pheromonDecayCoefficient: 0.25,
+                    pheromonLocalDecayCoefficient: 0.1,
+                    betterEdgeCoefficient: 0.5,
+                    importanceInformation: 1,
+                    antsAmount: 40
+                },
+                {
+                    pheromonDecayCoefficient: 0.25,
+                    pheromonLocalDecayCoefficient: 0.25,
+                    betterEdgeCoefficient: 0.5,
+                    importanceInformation: 1,
+                    antsAmount: 40
+                },
+                {
+                    pheromonDecayCoefficient: 0.25,
+                    pheromonLocalDecayCoefficient: 0.5,
+                    betterEdgeCoefficient: 0.5,
+                    importanceInformation: 1,
+                    antsAmount: 40
+                },
+                {
+                    pheromonDecayCoefficient: 0.25,
+                    pheromonLocalDecayCoefficient: 0.75,
+                    betterEdgeCoefficient: 0.5,
+                    importanceInformation: 1,
+                    antsAmount: 40
+                },
+                {
+                    pheromonDecayCoefficient: 0.25,
+                    pheromonLocalDecayCoefficient: 1,
+                    betterEdgeCoefficient: 0.5,
+                    importanceInformation: 1,
+                    antsAmount: 40
+                }
+            ];
+            console.log('--------------------startAll');
+            for (const param of params) {
+                console.log('--------------------start', param);
+                let duration = [];
+                for (let i = 0; i < 100; i++) {
+                    const simulation = new simulation_1.Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)), undefined, param);
+                    duration.push(yield simulation.start());
+                }
+                console.log('--------------------end');
             }
-            console.log('--------------------end');
+            console.log('--------------------endAll');
             reply({
-                duration: duration
+                duration: []
             });
         });
     }

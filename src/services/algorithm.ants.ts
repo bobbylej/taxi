@@ -13,14 +13,21 @@ export class AlgorithmAnts extends Algorithm {
   pheromones: any;
   pheromonDecayCoefficient = 0.1; // pG
   pheromonLocalDecayCoefficient = 0.1; // pL
-  betterEdgeCoefficient = 0.5; // q0
+  betterEdgeCoefficient = 0.75; // q0
   importanceInformation = 1; // Beta
   antsAmount = 40;
   // iterationAmount = 300;
   // minIterationAmount = 1;
 
-  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>, params?: any) {
     super(clients, drivers, distances);
+    if (params) {
+      this.pheromonDecayCoefficient = params.pheromonDecayCoefficient;
+      this.pheromonLocalDecayCoefficient = params.pheromonLocalDecayCoefficient;
+      this.betterEdgeCoefficient = params.betterEdgeCoefficient;
+      this.importanceInformation = params.importanceInformation;
+      this.antsAmount = params.antsAmount;
+    }
   }
 
   async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {

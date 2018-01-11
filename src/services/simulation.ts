@@ -25,11 +25,13 @@ export class Simulation {
   clients: Array<Client>;
   drivers: Array<Driver>;
   distances: Array<Distance>;
+  params: any;
 
-  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>, params?: any) {
     this.clients = clients;
     this.drivers = drivers;
     this.distances = distances;
+    this.params = params;
   }
 
   async start(): Promise<number> {
@@ -73,7 +75,7 @@ export class Simulation {
       // console.log('waitingClients: ', waitingClients.length);
       freeDrivers = this.getFreeDrivers(driversRoutes, globalTime);
       // console.log('freeDrivers: ', freeDrivers.length);
-      const algorithm = new AlgorithmAnts(waitingClients, freeDrivers, this.distances);
+      const algorithm = new AlgorithmAnts(waitingClients, freeDrivers, this.distances, params);
       // console.log('start: ', 'findBestPath');
       const path = await algorithm.findBestPath(index > 0, false);
       // console.log('end: ', 'findBestPath');

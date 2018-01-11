@@ -16,8 +16,13 @@ export class AlgorithmGenetic extends Algorithm {
   // iterationAmount = 100;
   paths: Array<Path>;
 
-  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>, params?: any) {
     super(clients, drivers, distances);
+    if (params) {
+      this.crossoverProbability = params.crossoverProbability;
+      this.mutationProbability = params.mutationProbability;
+      this.gentypesAmount = params.gentypesAmount;
+    }
   }
 
   async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {

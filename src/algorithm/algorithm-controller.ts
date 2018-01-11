@@ -84,8 +84,8 @@ export default class AlgorithmController {
   }
 
   public async distances(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    const clients: Array<Client> = this.fileService.readInput('test10.clients.json');
-    let drivers = this.fileService.readInput('test10.taxi.json');
+    const clients: Array<Client> = this.fileService.readInput('test9.clients.json');
+    let drivers = this.fileService.readInput('test9.taxi.json');
     // drivers = drivers.slice(36,37);
 
     this.algorithm = new Algorithm(clients, drivers);
@@ -101,21 +101,111 @@ export default class AlgorithmController {
   }
 
   public async simulation(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    let clients: Array<Client> = this.fileService.readInput('test10.clients.json');
-    let drivers = this.fileService.readInput('test10.taxi.json');
+    let clients: Array<Client> = this.fileService.readInput('test9.clients.json');
+    let drivers = this.fileService.readInput('test9.taxi.json');
     // drivers = drivers.slice(0,10);
-    // const distances: Array<Distance> = this.fileService.readInput('test10.distances.json');
+    // const distances: Array<Distance> = this.fileService.readInput('test9.distances.json');
 
-    console.log('--------------------start');
-    let duration = [];
-    for (let i = 0; i < 50; i++) {
-      const simulation = new Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)));
-      duration.push(await simulation.start());
+    // let params = [
+    //   {
+    //     initialExhaustedValue: 0.25,
+    //     N: 0.1,
+    //     beesAmount: 40
+    //   },
+    //   {
+    //     initialExhaustedValue: 0.25,
+    //     N: 0.1,
+    //     beesAmount: 40
+    //   },
+    //   {
+    //     initialExhaustedValue: 0.25,
+    //     N: 0.1,
+    //     beesAmount: 40
+    //   },
+    //   {
+    //     initialExhaustedValue: 0.25,
+    //     N: 0.1,
+    //     beesAmount: 40
+    //   },
+    //   {
+    //     initialExhaustedValue: 0.25,
+    //     N: 0.1,
+    //     beesAmount: 40
+    //   }
+    // ];
+    // let params = [
+    //   {
+    //     crossoverProbability: 0.25,
+    //     mutationProbability: 0.1,
+    //     gentypesAmount: 40
+    //   },
+    //   {
+    //     crossoverProbability: 0.25,
+    //     mutationProbability: 0.1,
+    //     gentypesAmount: 40
+    //   },
+    //   {
+    //     crossoverProbability: 0.25,
+    //     mutationProbability: 0.1,
+    //     gentypesAmount: 40
+    //   },
+    //   {
+    //     crossoverProbability: 0.25,
+    //     mutationProbability: 0.1,
+    //     gentypesAmount: 40
+    //   }
+    // ];
+    let params = [
+      {
+        pheromonDecayCoefficient: 0.25,
+        pheromonLocalDecayCoefficient: 0.1,
+        betterEdgeCoefficient: 0.5,
+        importanceInformation: 1,
+        antsAmount: 40
+      },
+      {
+        pheromonDecayCoefficient: 0.25,
+        pheromonLocalDecayCoefficient: 0.25,
+        betterEdgeCoefficient: 0.5,
+        importanceInformation: 1,
+        antsAmount: 40
+      },
+      {
+        pheromonDecayCoefficient: 0.25,
+        pheromonLocalDecayCoefficient: 0.5,
+        betterEdgeCoefficient: 0.5,
+        importanceInformation: 1,
+        antsAmount: 40
+      },
+      {
+        pheromonDecayCoefficient: 0.25,
+        pheromonLocalDecayCoefficient: 0.75,
+        betterEdgeCoefficient: 0.5,
+        importanceInformation: 1,
+        antsAmount: 40
+      },
+      {
+        pheromonDecayCoefficient: 0.25,
+        pheromonLocalDecayCoefficient: 1,
+        betterEdgeCoefficient: 0.5,
+        importanceInformation: 1,
+        antsAmount: 40
+      }
+    ];
+    console.log('--------------------startAll');
+    for (const param of params) {
+      console.log('--------------------start', param);
+      let duration = [];
+      for (let i = 0; i < 100; i++) {
+        const simulation = new Simulation(JSON.parse(JSON.stringify(clients)), JSON.parse(JSON.stringify(drivers)), undefined, param);
+        duration.push(await simulation.start());
+      }
+      console.log('--------------------end');
     }
-    console.log('--------------------end');
+    console.log('--------------------endAll');
 
     reply({
-      duration: duration
+      duration: []
     });
   }
 

@@ -21,8 +21,13 @@ export class AlgorithmPSABC extends Algorithm {
   initialPaths: Array<Path>;
   spvService = new SPVService();
 
-  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {
+  constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>, params?: any) {
     super(clients, drivers, distances);
+    if (params) {
+      this.initialExhaustedValue = params.initialExhaustedValue;
+      this.beesAmount = params.beesAmount;
+      this.N = params.N;
+    }
   }
 
   async findBestPath(getDistances?: boolean, getAllDistances?: boolean,): Promise<Path> {

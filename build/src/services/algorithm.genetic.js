@@ -14,11 +14,16 @@ const path_1 = require("./../models/path");
 // Services
 const algorithm_1 = require("./algorithm");
 class AlgorithmGenetic extends algorithm_1.Algorithm {
-    constructor(clients, drivers, distances) {
+    constructor(clients, drivers, distances, params) {
         super(clients, drivers, distances);
         this.crossoverProbability = 0;
         this.mutationProbability = 0.6;
         this.gentypesAmount = 40;
+        if (params) {
+            this.crossoverProbability = params.crossoverProbability;
+            this.mutationProbability = params.mutationProbability;
+            this.gentypesAmount = params.gentypesAmount;
+        }
     }
     findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {
