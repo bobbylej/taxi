@@ -84,8 +84,8 @@ export default class AlgorithmController {
   }
 
   public async distances(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    const clients: Array<Client> = this.fileService.readInput('test1.clients.json');
-    let drivers = this.fileService.readInput('test1.taxi.json');
+    const clients: Array<Client> = this.fileService.readInput('test10.clients.json');
+    let drivers = this.fileService.readInput('test10.taxi.json');
     // drivers = drivers.slice(36,37);
 
     this.algorithm = new Algorithm(clients, drivers);
@@ -101,10 +101,10 @@ export default class AlgorithmController {
   }
 
   public async simulation(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-    let clients: Array<Client> = this.fileService.readInput('test1.clients.json');
-    let drivers = this.fileService.readInput('test1.taxi.json');
+    let clients: Array<Client> = this.fileService.readInput('test10.clients.json');
+    let drivers = this.fileService.readInput('test10.taxi.json');
     // drivers = drivers.slice(0,10);
-    // const distances: Array<Distance> = this.fileService.readInput('test1.distances.json');
+    // const distances: Array<Distance> = this.fileService.readInput('test10.distances.json');
 
     console.log('--------------------start');
     let duration = [];

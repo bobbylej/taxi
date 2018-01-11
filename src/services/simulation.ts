@@ -66,14 +66,14 @@ export class Simulation {
       fullDuration += this.countDuration(driversRoutes, globalTime);
       // console.log('duration: ', fullDuration);
       waitingClients = this.getWaitingClients(waitingClients, driversRoutes, globalTime);
-      const cIds = waitingClients.map(client => {
-        return client.id;
-      });
+      // const cIds = waitingClients.map(client => {
+      //   return client.id;
+      // });
       // console.log('---------------------------------cIds', cIds);
       // console.log('waitingClients: ', waitingClients.length);
       freeDrivers = this.getFreeDrivers(driversRoutes, globalTime);
       // console.log('freeDrivers: ', freeDrivers.length);
-      const algorithm = new AlgorithmPSABC(waitingClients, freeDrivers, this.distances);
+      const algorithm = new AlgorithmAnts(waitingClients, freeDrivers, this.distances);
       // console.log('start: ', 'findBestPath');
       const path = await algorithm.findBestPath(index > 0, false);
       // console.log('end: ', 'findBestPath');
@@ -92,7 +92,7 @@ export class Simulation {
       // console.log('driversRoutes', globalTime, JSON.stringify(mapR));
       // iteration++;
     }
-    waitingClients = this.getWaitingClients(waitingClients, driversRoutes, globalTime);
+    // waitingClients = this.getWaitingClients(waitingClients, driversRoutes, globalTime);
     // console.log('waitingClients: ', waitingClients.length);
     fullDuration += this.countDuration(driversRoutes, -1);
 

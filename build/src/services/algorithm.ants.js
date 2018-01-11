@@ -18,10 +18,10 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
     // minIterationAmount = 1;
     constructor(clients, drivers, distances) {
         super(clients, drivers, distances);
-        this.pheromonDecayCoefficient = 0.25;
-        this.pheromonLocalDecayCoefficient = 0.1;
-        this.betterEdgeCoefficient = 0.5;
-        this.importanceInformation = 2;
+        this.pheromonDecayCoefficient = 0.1; // pG
+        this.pheromonLocalDecayCoefficient = 0.1; // pL
+        this.betterEdgeCoefficient = 0.5; // q0
+        this.importanceInformation = 1; // Beta
         this.antsAmount = 40;
     }
     findBestPath(getDistances, getAllDistances) {
@@ -209,7 +209,7 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
                         edge.weight = edge.countEdge(path, this.distances);
                         const availableNodes = Object.assign({}, this.nodes);
                         delete availableNodes[node1.client.id];
-                        this.pheromones[startNode.id][node1.id] = this.getInitPheromone(path, edge, availableNodes);
+                        this.pheromones[startNode.id][node1.id] = 0.0001; //this.getInitPheromone(path, edge, availableNodes);
                         if (!this.pheromones[node1.id]) {
                             this.pheromones[node1.id] = {};
                         }
@@ -238,7 +238,7 @@ class AlgorithmAnts extends algorithm_1.Algorithm {
                                     const availableNodes = Object.assign({}, this.nodes);
                                     delete availableNodes[node1.client.id];
                                     delete availableNodes[node2.client.id];
-                                    this.pheromones[node1.id][node2.id] = this.getInitPheromone(path, edge, availableNodes);
+                                    this.pheromones[node1.id][node2.id] = 0.0001; //this.getInitPheromone(path, edge, availableNodes);
                                 });
                             }
                         }

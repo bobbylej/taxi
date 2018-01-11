@@ -16,10 +16,9 @@ const algorithm_1 = require("./algorithm");
 class AlgorithmGenetic extends algorithm_1.Algorithm {
     constructor(clients, drivers, distances) {
         super(clients, drivers, distances);
-        this.crossoverProbability = 0.6;
+        this.crossoverProbability = 0;
         this.mutationProbability = 0.6;
         this.gentypesAmount = 40;
-        this.iterationAmount = 100;
     }
     findBestPath(getDistances, getAllDistances) {
         return __awaiter(this, void 0, void 0, function* () {

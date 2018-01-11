@@ -10,10 +10,10 @@ import Path from './../models/path';
 import { Algorithm } from './algorithm';
 
 export class AlgorithmGenetic extends Algorithm {
-  crossoverProbability = 0.6;
+  crossoverProbability = 0;
   mutationProbability = 0.6;
   gentypesAmount = 40;
-  iterationAmount = 100;
+  // iterationAmount = 100;
   paths: Array<Path>;
 
   constructor(clients: Array<Client>, drivers: Array<Driver>, distances?: Array<Distance>) {

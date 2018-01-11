@@ -57,8 +57,8 @@ class AlgorithmController {
     }
     distances(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const clients = this.fileService.readInput('test1.clients.json');
-            let drivers = this.fileService.readInput('test1.taxi.json');
+            const clients = this.fileService.readInput('test10.clients.json');
+            let drivers = this.fileService.readInput('test10.taxi.json');
             // drivers = drivers.slice(36,37);
             this.algorithm = new algorithm_1.Algorithm(clients, drivers);
             this.algorithm.distances = yield this.algorithm.getDistances(true);
@@ -70,10 +70,10 @@ class AlgorithmController {
     }
     simulation(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            let clients = this.fileService.readInput('test1.clients.json');
-            let drivers = this.fileService.readInput('test1.taxi.json');
+            let clients = this.fileService.readInput('test10.clients.json');
+            let drivers = this.fileService.readInput('test10.taxi.json');
             // drivers = drivers.slice(0,10);
-            // const distances: Array<Distance> = this.fileService.readInput('test1.distances.json');
+            // const distances: Array<Distance> = this.fileService.readInput('test10.distances.json');
             console.log('--------------------start');
             let duration = [];
             for (let i = 0; i < 50; i++) {

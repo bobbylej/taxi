@@ -11,11 +11,11 @@ import { Algorithm } from './algorithm';
 import { SPVService } from './spv.service';
 
 export class AlgorithmPSABC extends Algorithm {
-  initialExhaustedValue = 10;
+  initialExhaustedValue = 10; // CE
   // modifiesPathAmount = 3;
   beesAmount = 40;
   // iterationAmount = 1100;
-  N = 0.5;
+  N = 1;
   exhaustedValues: Array<number>;
   paths: Array<Path>;
   initialPaths: Array<Path>;

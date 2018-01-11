@@ -11,10 +11,10 @@ import { Algorithm } from './algorithm';
 
 export class AlgorithmAnts extends Algorithm {
   pheromones: any;
-  pheromonDecayCoefficient = 0.25;
-  pheromonLocalDecayCoefficient = 0.1;
-  betterEdgeCoefficient = 0.5;
-  importanceInformation = 2;
+  pheromonDecayCoefficient = 0.1; // pG
+  pheromonLocalDecayCoefficient = 0.1; // pL
+  betterEdgeCoefficient = 0.5; // q0
+  importanceInformation = 1; // Beta
   antsAmount = 40;
   // iterationAmount = 300;
   // minIterationAmount = 1;
@@ -214,7 +214,7 @@ export class AlgorithmAnts extends Algorithm {
             edge.weight = edge.countEdge(path, this.distances);
             const availableNodes = Object.assign({}, this.nodes);
             delete availableNodes[node1.client.id];
-            this.pheromones[startNode.id][node1.id] = this.getInitPheromone(path, edge, availableNodes);
+            this.pheromones[startNode.id][node1.id] = 0.0001; //this.getInitPheromone(path, edge, availableNodes);
 
             if (!this.pheromones[node1.id]) {
               this.pheromones[node1.id] = {};
@@ -244,7 +244,7 @@ export class AlgorithmAnts extends Algorithm {
                   const availableNodes = Object.assign({}, this.nodes);
                   delete availableNodes[node1.client.id];
                   delete availableNodes[node2.client.id];
-                  this.pheromones[node1.id][node2.id] = this.getInitPheromone(path, edge, availableNodes);
+                  this.pheromones[node1.id][node2.id] = 0.0001; //this.getInitPheromone(path, edge, availableNodes);
                 });
               }
             }
